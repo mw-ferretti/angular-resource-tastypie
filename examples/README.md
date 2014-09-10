@@ -12,7 +12,5 @@
 -------------
 1. cd frontend
 2. python -m SimpleHTTPServer
-
-**END**
--------
+-------------
 - Now, open your browser and go to 127.0.0.1:8000
