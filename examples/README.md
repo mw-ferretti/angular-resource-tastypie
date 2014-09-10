@@ -1,18 +1,18 @@
-### instructions ###
+**instructions**
 
-### Backend:
+**Backend:**
 ------------
-cd backend/
-pip install -r requirements.txt
-cd myproject
-./manager syncdb
-./manager runserver 0.0.0.0:8001
+1. cd backend/
+2. pip install -r requirements.txt
+3. cd myproject
+4. ./manager syncdb
+5. ./manager runserver 0.0.0.0:8001
 
-### Frontend:
+**Frontend:**
 -------------
-cd frontend
-python -m SimpleHTTPServer
+1. cd frontend
+2. python -m SimpleHTTPServer
 
-### END
+**END**
 -------
-Now, open your browser and go to 127.0.0.1:8000
+- Now, open your browser and go to 127.0.0.1:8000
