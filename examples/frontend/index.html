@@ -10,9 +10,9 @@
 </head>
 <body ng-controller="MyCtrl">
     
-    <h1><u>Angular Resource Tastypie</u></h1>
+    <h2><u>Angular Resource Tastypie</u></h2>
     
-    <h2>Meta</h2>
+    <h3>Meta</h3>
     <ul>
         <li>Endpoint: {{ Song.endpoint }}</li>
         <li>Previous: {{ Song.page.meta.previous || 'NULL' }}</li>
@@ -22,16 +22,14 @@
         <li>Total_count: {{Song.page.meta.total_count}}</li>
     </ul>
     
-    <h2>Paginator</h2>
-    <ul>
-        <li>Page: {{Song.page.index}}/{{Song.page.len}}</li>
-        <li ng-show="Song.page.meta.previous"><a href='' ng-click="Song.page.first()">first</a></li>
-        <li ng-show="Song.page.meta.previous"><a href='' ng-click="Song.page.previous()">Previous</a></li>
-        <li ng-show="Song.page.meta.next"><a href='' ng-click="Song.page.next()">Next</a></li>
-        <li ng-show="Song.page.meta.next"><a href='' ng-click="Song.page.last()">Last</a></li>
-    </ul>
-    
-    <h2>Objects</h2>
+    <h3>Paginator</h3>
+        Page: {{Song.page.index}}/{{Song.page.len}}
+        <input type="button" ng-click="Song.page.first()" ng-disabled="!Song.page.meta.previous" value="First">
+        <input type="button" ng-click="Song.page.previous()" ng-disabled="!Song.page.meta.previous" value="Previous">
+        <input type="button" ng-click="Song.page.next()" ng-disabled="!Song.page.meta.next" value="Next">
+        <input type="button" ng-click="Song.page.last()" ng-disabled="!Song.page.meta.next" value="Last">
+
+    <h3>Objects</h3>
     <table border="1">
         <thead>
             <th>Id</th>
@@ -52,7 +50,7 @@
         </tbody>
     </table>
     
-    <h2>Form</h2>
+    <h3>Form</h3>
     <form>
         ID: {{song.id}} <br>
         RANK: <input type="text" ng-model="song.rank" value="{{song.rank}}"> <br>
