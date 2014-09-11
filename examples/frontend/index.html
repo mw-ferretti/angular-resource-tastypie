@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="utf-8">
+    <title>Simple View</title>
+    <script src="lib/angular-1.2.16/angular.min.js"></script>
+    <script src="lib/angular-1.2.16/angular-resource.min.js"></script>
+    <script src="lib/angular-resource-tastypie-1.0.min.js"></script>
+    <script src="controller.js"></script>
+</head>
+<body ng-controller="MyCtrl">
+    
+    <h1><u>Angular Resource Tastypie</u></h1>
+    
+    <h2>Meta</h2>
+    <ul>
+        <li>Endpoint: {{ Song.endpoint }}</li>
+        <li>Previous: {{ Song.page.meta.previous || 'NULL' }}</li>
+        <li>Next: {{ Song.page.meta.next || 'NULL' }}</li>
+        <li>Limit: {{Song.page.meta.limit}}</li>
+        <li>Offset: {{Song.page.meta.offset}}</li>
+        <li>Total_count: {{Song.page.meta.total_count}}</li>
+    </ul>
+    
+    <h2>Paginator</h2>
+    <ul>
+        <li>Page: {{Song.page.index}}/{{Song.page.len}}</li>
+        <li ng-show="Song.page.meta.previous"><a href='' ng-click="Song.page.first()">first</a></li>
+        <li ng-show="Song.page.meta.previous"><a href='' ng-click="Song.page.previous()">Previous</a></li>
+        <li ng-show="Song.page.meta.next"><a href='' ng-click="Song.page.next()">Next</a></li>
+        <li ng-show="Song.page.meta.next"><a href='' ng-click="Song.page.last()">Last</a></li>
+    </ul>
+    
+    <h2>Objects</h2>
+    <table border="1">
+        <thead>
+            <th>Id</th>
+            <th>Rank</th>
+            <th>Song</th>
+            <th>artist</th>
+            <th colspan="2"></th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="obj in Song.page.objects">
+                <td>{{obj.id}}</td>
+                <td><input type="text" ng-model="obj.rank" value="{{obj.rank}}"></td>
+                <td><input type="text" ng-model="obj.song" value="{{obj.song}}"></td>
+                <td><input type="text" ng-model="obj.artist" value="{{obj.artist}}"></td>
+                <td><input type="button" ng-click="obj.$save()" value="Save"></td>
+                <td><input type="button" ng-click="obj.$delete()" value="Delete"></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h2>Form</h2>
+    <form>
+        ID: {{song.id}} <br>
+        RANK: <input type="text" ng-model="song.rank" value="{{song.rank}}"> <br>
+        SONG: <input type="text" ng-model="song.song" value="{{song.song}}"> <br>
+        ARTIST: <input type="text" ng-model="song.artist" value="{{song.artist}}"> <br>
+        <input type="button" ng-click="song.$save()" value="Save"> 
+        <input type="button" ng-click="song.$clear()" value="Clear">
+    </form>
+    
+</body>
+</html>
