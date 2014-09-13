@@ -33,13 +33,25 @@
     
     <div id="form" class="container">
         <h3>Form</h3>
-        <form>
+        <form name="myForm">
             ID: {{song.id}} <br>
-            RANK: <input type="text" ng-model="song.rank" value="{{song.rank}}"> <br>
-            SONG: <input type="text" ng-model="song.song" value="{{song.song}}"> <br>
-            ARTIST: <input type="text" ng-model="song.artist" value="{{song.artist}}"> <br>
-            <input type="button" ng-click="song.$save()" value="Save"> 
-            <input type="button" ng-click="song.$clear()" value="Clear">
+            RANK: <input type="number" name="input" ng-model="song.rank" value="{{song.rank}}" required> 
+            <span 
+                  class="error" 
+                  ng-show="myForm.input.$error.required"
+            >
+            Required!
+            </span>
+            <span 
+                  class="error" 
+                  ng-show="myForm.input.$error.number"
+            >
+            Not valid number!
+            </span><br>
+            SONG: <input type="text" ng-model="song.song" value="{{song.song}}" required> <br>
+            ARTIST: <input type="text" ng-model="song.artist" value="{{song.artist}}" required> <br>
+            <input ng-disabled="!myForm.$valid" type="button" name="input" ng-click="song.$save()" value="Save"> 
+            <input ng-disabled="!myForm.$valid" type="button" name="input" ng-click="song.$clear()" value="Clear">
         </form>
     </div>
     
