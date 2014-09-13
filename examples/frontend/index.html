@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="myApp">
+<html lang="en" ng-app="myApp">    
 <head>
     <meta charset="utf-8">
     <title>Simple View</title>
@@ -7,58 +7,75 @@
     <script src="lib/angular-1.2.16/angular-resource.min.js"></script>
     <script src="lib/angular-resource-tastypie-1.0.min.js"></script>
     <script src="controller.js"></script>
+    
+    <style>
+        #meta, #form { float: left }
+        .clear { clear: both }
+        .container { padding: 10px }
+    </style>
 </head>
+    
 <body ng-controller="MyCtrl">
     
     <h2><u>Angular Resource Tastypie</u></h2>
     
-    <h3>Meta</h3>
-    <ul>
-        <li>Endpoint: {{ Song.endpoint }}</li>
-        <li>Previous: {{ Song.page.meta.previous || 'NULL' }}</li>
-        <li>Next: {{ Song.page.meta.next || 'NULL' }}</li>
-        <li>Limit: {{Song.page.meta.limit}}</li>
-        <li>Offset: {{Song.page.meta.offset}}</li>
-        <li>Total_count: {{Song.page.meta.total_count}}</li>
-    </ul>
+    <div id="meta" class="container">
+        <h3>Meta</h3>
+        <ul>
+            <li>Endpoint: {{ Song.endpoint }}</li>
+            <li>Previous: {{ Song.page.meta.previous || 'NULL' }}</li>
+            <li>Next: {{ Song.page.meta.next || 'NULL' }}</li>
+            <li>Limit: {{Song.page.meta.limit}}</li>
+            <li>Offset: {{Song.page.meta.offset}}</li>
+            <li>Total_count: {{Song.page.meta.total_count}}</li>
+        </ul>
+    </div>
     
-    <h3>Paginator</h3>
-        Page: {{Song.page.index}}/{{Song.page.len}}
+    <div id="form" class="container">
+        <h3>Form</h3>
+        <form>
+            ID: {{song.id}} <br>
+            RANK: <input type="text" ng-model="song.rank" value="{{song.rank}}"> <br>
+            SONG: <input type="text" ng-model="song.song" value="{{song.song}}"> <br>
+            ARTIST: <input type="text" ng-model="song.artist" value="{{song.artist}}"> <br>
+            <input type="button" ng-click="song.$save()" value="Save"> 
+            <input type="button" ng-click="song.$clear()" value="Clear">
+        </form>
+    </div>
+    
+    <div class="clear"> </div>
+    
+    <div id="paginator" class="container">
+        <h3>Paginator:</h3>
         <input type="button" ng-click="Song.page.first()" ng-disabled="!Song.page.meta.previous" value="First">
         <input type="button" ng-click="Song.page.previous()" ng-disabled="!Song.page.meta.previous" value="Previous">
+        <b>{{Song.page.index}}/{{Song.page.len}}</b>
         <input type="button" ng-click="Song.page.next()" ng-disabled="!Song.page.meta.next" value="Next">
         <input type="button" ng-click="Song.page.last()" ng-disabled="!Song.page.meta.next" value="Last">
+    </div>
+    
+    <div id="objects" class="container">
+        <h3>Objects</h3>
+        <table border="0">
+            <thead>
+                <th>Id</th>
+                <th>Rank</th>
+                <th>Song</th>
+                <th>artist</th>
+                <th colspan="2"></th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="obj in Song.page.objects">
+                    <td>{{obj.id}}</td>
+                    <td><input type="text" ng-model="obj.rank" value="{{obj.rank}}"></td>
+                    <td><input type="text" ng-model="obj.song" value="{{obj.song}}"></td>
+                    <td><input type="text" ng-model="obj.artist" value="{{obj.artist}}"></td>
+                    <td><input type="button" ng-click="obj.$save()" value="Save"></td>
+                    <td><input type="button" ng-click="obj.$delete()" value="Delete"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-    <h3>Objects</h3>
-    <table border="1">
-        <thead>
-            <th>Id</th>
-            <th>Rank</th>
-            <th>Song</th>
-            <th>artist</th>
-            <th colspan="2"></th>
-        </thead>
-        <tbody>
-            <tr ng-repeat="obj in Song.page.objects">
-                <td>{{obj.id}}</td>
-                <td><input type="text" ng-model="obj.rank" value="{{obj.rank}}"></td>
-                <td><input type="text" ng-model="obj.song" value="{{obj.song}}"></td>
-                <td><input type="text" ng-model="obj.artist" value="{{obj.artist}}"></td>
-                <td><input type="button" ng-click="obj.$save()" value="Save"></td>
-                <td><input type="button" ng-click="obj.$delete()" value="Delete"></td>
-            </tr>
-        </tbody>
-    </table>
-    
-    <h3>Form</h3>
-    <form>
-        ID: {{song.id}} <br>
-        RANK: <input type="text" ng-model="song.rank" value="{{song.rank}}"> <br>
-        SONG: <input type="text" ng-model="song.song" value="{{song.song}}"> <br>
-        ARTIST: <input type="text" ng-model="song.artist" value="{{song.artist}}"> <br>
-        <input type="button" ng-click="song.$save()" value="Save"> 
-        <input type="button" ng-click="song.$clear()" value="Clear">
-    </form>
-    
 </body>
 </html>
