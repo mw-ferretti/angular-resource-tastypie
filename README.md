@@ -1,7 +1,7 @@
 angular-resource-tastypie
 =========================
 
-**Example Usage:**
+**Usage sample:**
 
 ```javascript
 angular.module('myApp', ['ngResourceTastypie'])
