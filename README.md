@@ -24,12 +24,12 @@ angular.module('myApp', ['ngResourceTastypie'])
 }]);
 ```
 
-Add the module dependency:
+- Add the module dependency:
 ```javascript
 angular.module('myApp', ['ngResourceTastypie'])
 ```
 
-Add your web service provider configuration:
+- Add your web service provider configuration:
 ```javascript
 .config(function($tastypieProvider){
     $tastypieProvider.setResourceUrl('http://127.0.0.1:8001/api/v1/');
@@ -37,10 +37,10 @@ Add your web service provider configuration:
 })
 ```
 
--NOTE
-```
+- **NOTE**
 ```javascript
 $tastypieProvider.setAuth('username','api_key');
+```
 ```
 This api_key was fixed only for demonstration. 
 You must generate a dynamic key during the login User, in its authorization system, and then configure this attribute. 
