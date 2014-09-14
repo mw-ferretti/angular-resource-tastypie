@@ -3,6 +3,10 @@ angular-resource-tastypie
 
 - Simple angularJs client for django-tastypie or equivalent schema RESTful.
 
+**Requirements**
+
+- AngularJs
+
 **Usage sample:**
 
 ```javascript
