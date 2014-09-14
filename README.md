@@ -6,8 +6,6 @@ Simple angularJs client for django-tastypie or equivalent schema RESTful.
 
 ##Usage
 
-Your controller.js
-
 ```javascript
 angular.module('myApp', ['ngResourceTastypie'])
 
@@ -25,4 +23,3 @@ angular.module('myApp', ['ngResourceTastypie'])
     
 }]);
 ```
-
