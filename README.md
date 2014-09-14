@@ -1,13 +1,10 @@
-angular-resource-tastypie
-=========================
+#angular-resource-tastypie
+Simple angularJs client for django-tastypie or equivalent schema RESTful.
 
-- Simple angularJs client for django-tastypie or equivalent schema RESTful.
-
-**Requirements**
-
+##Requirements
 - AngularJs
 
-**Usage sample:**
+##Usage sample
 
 ```javascript
 angular.module('myApp', ['ngResourceTastypie'])
