@@ -68,4 +68,4 @@ http://django-tastypie.readthedocs.org/en/latest/authentication.html
 }]);
 ```
 
-## $tastypieResource
+### $tastypieResource
