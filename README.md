@@ -46,18 +46,21 @@ angular.module('myApp', ['ngResourceTastypie'])
     $tastypieProvider.setAuth('admin','320c4e7da6ed93946f97f51e6f4c8354a098bb6e');
 })
 ```
-
+<blockquote>
 **NOTE**
 ```javascript
 $tastypieProvider.setAuth('username','api_key');
 ```
+<p>
 This api_key was fixed only for demonstration. 
 You must generate a dynamic key during the login User, 
 in its authorization system, and then configure this attribute. 
 With django-tastypie this task is quite simple: 
 http://django-tastypie.readthedocs.org/en/latest/authentication.html
+</p>
+</blockquote>
 
-**Dependency injection in the scope:**
+** Add dependency in the scope:**
 ```javascript
 .controller('MyCtrl', ['$scope', '$tastypieResource', function($scope, $tastypieResource){
 
