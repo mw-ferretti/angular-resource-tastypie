@@ -50,8 +50,9 @@
             </span><br>
             SONG: <input type="text" ng-model="song.song" value="{{song.song}}" required> <br>
             ARTIST: <input type="text" ng-model="song.artist" value="{{song.artist}}" required> <br>
-            <input ng-disabled="!myForm.$valid" type="button" name="input" ng-click="song.$save()" value="Save"> 
-            <input ng-disabled="!myForm.$valid" type="button" name="input" ng-click="song.$clear()" value="Clear">
+            
+            <input ng-disabled="!myForm.$valid" type="button" ng-click="song.$save()" value="Save"> 
+            <input ng-disabled="!myForm.$valid" type="button" ng-click="song.$clear()" value="Clear">
         </form>
     </div>
     
@@ -77,11 +78,11 @@
                 <th colspan="2"></th>
             </thead>
             <tbody>
-                <tr ng-repeat="obj in Song.page.objects">
+                <tr ng-repeat="obj in Song.page.objects" name="myItem">
                     <td>{{obj.id}}</td>
-                    <td><input type="text" ng-model="obj.rank" value="{{obj.rank}}"></td>
-                    <td><input type="text" ng-model="obj.song" value="{{obj.song}}"></td>
-                    <td><input type="text" ng-model="obj.artist" value="{{obj.artist}}"></td>
+                    <td><input type="number" name="input" ng-model="obj.rank" value="{{obj.rank}}" required></td>
+                    <td><input type="text" name="input" ng-model="obj.song" value="{{obj.song}}" required></td>
+                    <td><input type="text" name="input" ng-model="obj.artist" value="{{obj.artist}}" required></td>
                     <td><input type="button" ng-click="obj.$save()" value="Save"></td>
                     <td><input type="button" ng-click="obj.$delete()" value="Delete"></td>
                 </tr>
