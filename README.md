@@ -64,13 +64,8 @@ http://django-tastypie.readthedocs.org/en/latest/authentication.html
 **Add dependency in the scope:**
 ```javascript
 .controller('MyCtrl', ['$scope', '$tastypieResource', function($scope, $tastypieResource){
-
-    $scope.Song = new $tastypieResource('song', {limit:5});
-    $scope.Song.objects.$find();
-
-    $scope.song = $scope.Song.objects.$create();
-    
+    ...
 }]);
 ```
 
-
+## $tastypieResource
