@@ -26,10 +26,12 @@ angular.module('myApp', ['ngResourceTastypie'])
 
 view.html
 ```html
+...
     <script src="angular.min.js"></script>
     <script src="angular-resource.min.js"></script>
     <script src="angular-resource-tastypie-1.0.min.js"></script>
     <script src="controller.js"></script>
+...
 ```
 
 **Add the module dependency:**
