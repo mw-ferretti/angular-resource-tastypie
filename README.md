@@ -5,7 +5,7 @@ Simple angularJs client for django-tastypie or equivalent schema RESTful.
 - AngularJs
 
 ##Usage
-
+controller.js
 ```javascript
 angular.module('myApp', ['ngResourceTastypie'])
 
@@ -22,6 +22,14 @@ angular.module('myApp', ['ngResourceTastypie'])
     $scope.song = $scope.Song.objects.$create();
     
 }]);
+```
+
+view.html
+```html
+    <script src="angular.min.js"></script>
+    <script src="angular-resource.min.js"></script>
+    <script src="angular-resource-tastypie-1.0.min.js"></script>
+    <script src="controller.js"></script>
 ```
 
 **Add the module dependency:**
