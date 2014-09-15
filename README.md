@@ -70,7 +70,7 @@ http://django-tastypie.readthedocs.org/en/latest/authentication.html
 This class is responsible by connect on the specific "list endpoint".
 This is where all magic happens.
 
-<h4>**Consider the following example:**</h4>
+<h5>Consider the following example:</h5>
 We have a service called "song", responsible for providing the "TOP 100 SONGS CLASSIC ROCK".
 ```
 http://127.0.0.1:8001/api/v1/song/
