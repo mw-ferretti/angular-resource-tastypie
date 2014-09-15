@@ -82,6 +82,61 @@ $scope.Song = new $tastypieResource('song');
 $scope.Song = new $tastypieResource('song',{limit:5}); //with default filters
 
 ```
+
+- <h5>Retrieving objects</h5>
+```javascript
+$scope.Song.objects.$filter(); //all objects
+
+//or
+
+$scope.Song.objects.$filter({rank__lte:10}); //with filters
+
+//or with callback
+$scope.Song.objects.$filter({rank__lte:10}).then(
+    function(result){
+        //obj result have a paging control.. wow!!
+        console.log(result);
+    },
+    function(error){
+        console.log(error);
+    }
+);
+
+//or
+var result = $scope.Song.objects.$filter(); //coping "$scope.Song.page.objects"
+//obj result have a paging control.. wow!!
+
+/*
+** All the returned objects have a paging control
+
+paging control
+
+Atributes:
+$scope.Song.endpoint;
+$scope.Song.page.meta.previous;
+$scope.Song.page.meta.next;
+$scope.Song.page.meta.limit;        
+$scope.Song.page.meta.offset;
+$scope.Song.page.meta.total_count;  
+$scope.Song.page.objects;           // objects list of current page
+$scope.Song.page.index;             // current number page
+$scope.Song.page.len;               // pages quantity
+$scope.Song.page.range;             // numbers list of pages
+        
+Methods:
+$scope.Song.page.change(index);
+$scope.Song.page.next();
+$scope.Song.page.previous();
+$scope.Song.page.refresh();
+$scope.Song.page.first();
+$scope.Song.page.last();
+
+*/
+```
+
+
+
+
 - <h5>Creating objects</h5>
 ```javascript
 var song = $scope.Song.objects.$create();
@@ -118,10 +173,16 @@ After save, your obj is updated. Example, now your obj has an "id".. wow!!
 */
 ```
 
-- <h5>Saving changes to objects</h5>
-To save changes to an object that’s already in the database, use save().
+- <h5>Updating objects</h5>
 ```javascript
-//consider the obj created earlier.
+//creating
+var song = $scope.Song.objects.$create();
+song.rank = 1
+song.song = "Sweet Emotion"
+song.artist = "Aerosmith"
+song.$save();
+
+//updating
 song.rank = 2
 song.$save()
 ```
