@@ -71,7 +71,7 @@ This class is responsible by connect on the specific "list endpoint".
 This is where all magic happens.
 
 **Consider the following example:**
-We have a service called "song", responsible for providing the "TOP 100 SONGS CLASSIC ROCK".
+<p>We have a service called "song", responsible for providing the "TOP 100 SONGS CLASSIC ROCK".</p>
 ```
 http://127.0.0.1:8001/api/v1/song/
 ```
