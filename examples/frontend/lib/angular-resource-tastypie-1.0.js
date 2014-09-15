@@ -174,11 +174,14 @@ angular.module('ngResourceTastypie',['ngResource'])
         delete obj.prototype['$query'];
         delete obj.prototype['$remove'];
 
-        obj.prototype.$save = function(){
-            var fields = this;
-            return this.$sv().then(function(){
-                self.resource.page.refresh();
-            });
+        obj.prototype.$save = function(){            
+            var resp = this.$sv();            
+            resp.then(
+                function(result){
+                    self.resource.page.refresh();
+                }           
+            );                
+            return resp;
         };
 
         obj.prototype.$delete = function(){

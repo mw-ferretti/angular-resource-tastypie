@@ -37,7 +37,7 @@ view.html
 angular.module('myApp', ['ngResourceTastypie'])
 ```
 
-**Add your web service provider configuration:**
+**Add your web services provider configuration:**
 ```javascript
 .config(function($tastypieProvider){
     $tastypieProvider.setResourceUrl('http://127.0.0.1:8001/api/v1/');
@@ -71,7 +71,7 @@ This class is responsible by connect on the specific "list endpoint".
 This is where all magic happens.
 
 <h5>Consider the following example:</h5>
-We have a service called "song", responsible for providing the "TOP 100 SONGS CLASSIC ROCK".
+We have a service called "song", responsible for providing the "TOP 100 SONGS CLASSIC ROCK":
 ```
 http://127.0.0.1:8001/api/v1/song/
 ```
@@ -81,4 +81,46 @@ $scope.Song = new $tastypieResource('song');
 //or
 $scope.Song = new $tastypieResource('song',{limit:5}); //with default filters
 
+```
+-Creating objects
+```javascript
+var song = $scope.Song.objects.$create();
+song.rank = 1
+song.song = "Sweet Emotion"
+song.artist = "Aerosmith"
+song.$save();
+
+//or
+
+$scope.Song.objects.$create({
+    rank: 1,
+    song: "Sweet Emotion",
+    artist: "Aerosmith"
+}).$save();
+
+//or with callback
+
+$scope.Song.objects.$create({
+    rank: 1,
+    song: "Sweet Emotion",
+    artist: "Aerosmith"
+}).$save().then(
+    function(result){
+        console.log(result);
+    },
+    function(error){
+        console.log(error);
+    }
+);
+
+/*
+After save, your obj is updated. Try console.log(song.id). wow!!
+*/
+```
+
+-Saving changes to objects
+To save changes to an object that’s already in the database, use save().
+```javascript
+song.rank = 2
+song.$save()
 ```
