@@ -82,7 +82,7 @@ $scope.Song = new $tastypieResource('song');
 $scope.Song = new $tastypieResource('song',{limit:5}); //with default filters
 
 ```
--Creating objects
+- Creating objects
 ```javascript
 var song = $scope.Song.objects.$create();
 song.rank = 1
@@ -118,7 +118,7 @@ After save, your obj is updated. Try console.log(song.id). wow!!
 */
 ```
 
--Saving changes to objects
+- Saving changes to objects
 To save changes to an object that’s already in the database, use save().
 ```javascript
 song.rank = 2
