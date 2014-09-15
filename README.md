@@ -114,13 +114,14 @@ $scope.Song.objects.$create({
 );
 
 /*
-After save, your obj is updated. Try console.log(song.id). wow!!
+After save, your obj is updated. Example, now your obj has an "id".. wow!!
 */
 ```
 
 - <h5>Saving changes to objects</h5>
 To save changes to an object that’s already in the database, use save().
 ```javascript
+//consider the obj created earlier.
 song.rank = 2
 song.$save()
 ```
