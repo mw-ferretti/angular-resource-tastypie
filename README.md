@@ -107,7 +107,7 @@ var result = $scope.Song.objects.$filter(); //obj result have a paging control..
 
 /*
 
-** All the returned objects have a paging control **
+** All the returned objects (from list_endpoint) have a paging control **
 
 Paging Control
 
@@ -133,9 +133,6 @@ $scope.Song.page.last();
 
 */
 ```
-
-
-
 
 - <h5>Creating objects</h5>
 ```javascript
