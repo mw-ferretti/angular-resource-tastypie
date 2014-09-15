@@ -87,13 +87,13 @@ $scope.Song = new $tastypieResource('song',{limit:5}); //with default filters
 ```javascript
 
 //all objects
-$scope.Song.objects.$filter();
+$scope.Song.objects.$find();
 
 //or with filters
-$scope.Song.objects.$filter({rank__lte:10});
+$scope.Song.objects.$find({rank__lte:10});
 
 //or with callback
-$scope.Song.objects.$filter({rank__lte:10}).then(
+$scope.Song.objects.$find({rank__lte:10}).then(
     function(result){
         console.log(result); //obj result have a paging control.. wow!!
     },
@@ -103,7 +103,7 @@ $scope.Song.objects.$filter({rank__lte:10}).then(
 );
 
 //or copying "$scope.Song.page"
-var result = $scope.Song.objects.$filter(); //obj result have a paging control.. wow!!
+var result = $scope.Song.objects.$find(); //obj result have a paging control.. wow!!
 
 /*
 
