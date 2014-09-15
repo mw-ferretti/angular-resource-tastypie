@@ -109,7 +109,7 @@ var result = $scope.Song.objects.$filter(); //obj result have a paging control..
 
 ** All the returned objects have a paging control **
 
-paging control
+Paging Control
 
 Attributes:
 $scope.Song.endpoint;
