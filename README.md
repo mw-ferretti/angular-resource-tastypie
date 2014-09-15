@@ -111,7 +111,7 @@ var result = $scope.Song.objects.$filter(); //coping "$scope.Song.page.objects"
 
 paging control
 
-Atributes:
+Attributes:
 $scope.Song.endpoint;
 $scope.Song.page.meta.previous;
 $scope.Song.page.meta.next;
