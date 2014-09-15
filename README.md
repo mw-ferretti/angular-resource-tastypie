@@ -16,10 +16,8 @@ angular.module('myApp', ['ngResourceTastypie'])
 
 .controller('MyCtrl', ['$scope', '$tastypieResource', function($scope, $tastypieResource){
 
-    $scope.Song = new $tastypieResource('song', {limit:5});
-    $scope.Song.objects.$find();
-
-    $scope.song = $scope.Song.objects.$create();
+    $scope.Service = new $tastypieResource('service', {limit:5});
+    $scope.Service.objects.$find();
     
 }]);
 ```
@@ -68,4 +66,13 @@ http://django-tastypie.readthedocs.org/en/latest/authentication.html
 }]);
 ```
 
-### $tastypieResource
+## $tastypieResource
+This class is responsible by connect on the specific "list endpoint".
+This is where all magic happens.
+
+**Consider the following example:**
+We have a service called "song", responsible for providing the "TOP 100 SONGS CLASSIC ROCK".
+```
+http://127.0.0.1:8001/api/v1/song/
+```
+
