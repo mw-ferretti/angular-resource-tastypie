@@ -1,5 +1,5 @@
 #angular-resource-tastypie
-Angularjs Resource tuning for django-tastypie or equivalent RESTful schema.
+The base Angularjs Resource with improvements for django-tastypie.
 
 ##Requirements
 - AngularJs
