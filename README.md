@@ -1,6 +1,6 @@
 #angular-resource-tastypie
-The base [Angularjs-Resource](https://docs.angularjs.org/api/ngResource/service/$resource) 
-with improvements for [Django-Tastypie](https://django-tastypie.readthedocs.org/en/latest/).
+The base [angular-resource](https://docs.angularjs.org/api/ngResource/service/$resource) 
+with improvements for [django-tastypie](https://django-tastypie.readthedocs.org/en/latest/).
 
 ##Requirements
 - AngularJs
