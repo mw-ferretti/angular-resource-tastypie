@@ -1,5 +1,6 @@
 #angular-resource-tastypie
-The base Angularjs Resource with improvements for django-tastypie.
+The base [Angularjs-Resource](https://docs.angularjs.org/api/ngResource/service/$resource) 
+with improvements for [Django-Tastypie](https://django-tastypie.readthedocs.org/en/latest/).
 
 ##Requirements
 - AngularJs
