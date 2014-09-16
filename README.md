@@ -27,7 +27,7 @@ view.html
 ...
     <script src="angular.min.js"></script>
     <script src="angular-resource.min.js"></script>
-    <script src="angular-resource-tastypie-1.0.min.js"></script>
+    <script src="angular-resource-tastypie.min.js"></script>
     <script src="controller.js"></script>
 ...
 ```
