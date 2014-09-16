@@ -175,7 +175,8 @@ function TastypieObjectsFactory($resource, $tastypiePaginator){
             var resp = this.$sv();            
             resp.then(
                 function(result){
-                    self.resource.page.refresh();
+                    if (typeof(self.resource.page.refresh) == typeof(Function))
+                        self.resource.page.refresh();
                 }           
             );                
             return resp;
@@ -185,7 +186,8 @@ function TastypieObjectsFactory($resource, $tastypiePaginator){
             var fields = this;
             return this.$rm().then(function(){
                 angular.forEach(fields, function(value, key){delete fields[key]});
-                self.resource.page.refresh();
+                if (typeof(self.resource.page.refresh) == typeof(Function))
+                        self.resource.page.refresh();
             });
         };
         

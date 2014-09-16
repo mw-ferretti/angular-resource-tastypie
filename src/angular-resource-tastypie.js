@@ -174,16 +174,14 @@ angular.module('ngResourceTastypie',['ngResource'])
         delete obj.prototype['$query'];
         delete obj.prototype['$remove'];
 
-        obj.prototype.$save = function(){
-            
-            var resp = this.$sv();
-            
+        obj.prototype.$save = function(){            
+            var resp = this.$sv();            
             resp.then(
                 function(result){
-                    self.resource.page.refresh();
+                    if (typeof(self.resource.page.refresh) == typeof(Function))
+                        self.resource.page.refresh();
                 }           
-            );
-                
+            );                
             return resp;
         };
 
@@ -191,7 +189,8 @@ angular.module('ngResourceTastypie',['ngResource'])
             var fields = this;
             return this.$rm().then(function(){
                 angular.forEach(fields, function(value, key){delete fields[key]});
-                self.resource.page.refresh();
+                if (typeof(self.resource.page.refresh) == typeof(Function))
+                        self.resource.page.refresh();
             });
         };
         
