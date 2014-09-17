@@ -1,6 +1,6 @@
 /**
  * @license AngularJs Resource Tastypie v1.0.0
- * (c) 2014 Marcos W. Ferretti LTDA ME, linkedin http://www.linkedin.com/pub/marcos-w-ferretti/32/928/a53
+ * (c) 2014 Marcos W. Ferretti LTDA ME, http://br.linkedin.com/in/mwferretti/
  * License: MIT
  */
 
