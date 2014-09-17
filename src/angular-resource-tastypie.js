@@ -1,6 +1,6 @@
 /**
  * @license Angular Resource Tastypie v1.0.0
- * (c) 2014 Marcos W. Ferretti LTDA ME, http://br.linkedin.com/in/mwferretti/
+ * (c) 2014 Marcos W. Ferretti, http://br.linkedin.com/in/mwferretti/
  * License: MIT
  */
 angular.module('ngResourceTastypie',['ngResource'])
