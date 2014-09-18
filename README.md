@@ -97,7 +97,7 @@ $scope.Song.objects.$find({rank__lte:10});
 //or with callback
 $scope.Song.objects.$find({rank__lte:10}).then(
     function(result){
-        console.log(result); //obj result have a paging control.. wow!!
+        console.log(result);
     },
     function(error){
         console.log(error);
