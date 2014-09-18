@@ -79,8 +79,9 @@ http://127.0.0.1:8001/api/v1/song/
 Then:
 ```javascript
 $scope.Song = new $tastypieResource('song');
-//or
-$scope.Song = new $tastypieResource('song',{limit:5}); //with default filters
+
+//or with default filters
+$scope.Song = new $tastypieResource('song',{limit:5});
 
 ```
 
