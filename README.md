@@ -85,6 +85,7 @@ $scope.Song = new $tastypieResource('song',{limit:5}); //with default filters
 ```
 
 - <h5>Retrieving objects</h5>
+All the returned objects (from list_endpoint) have a paging control server-side.
 ```javascript
 
 //all objects
@@ -107,8 +108,6 @@ $scope.Song.objects.$find({rank__lte:10}).then(
 var result = $scope.Song.objects.$find();
 
 /*
-** All the returned objects (from list_endpoint) have a paging control server-side **
-
 Paging Control Server-Side
 
 Attributes:
