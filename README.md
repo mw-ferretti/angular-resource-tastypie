@@ -61,6 +61,7 @@ http://django-tastypie.readthedocs.org/en/latest/authentication.html
 </blockquote>
 
 - <h5>Add dependency in the scope:</h5>
+```javascript
 .controller('MyCtrl', ['$scope', '$tastypieResource', function($scope, $tastypieResource){
     ...
 }]);
