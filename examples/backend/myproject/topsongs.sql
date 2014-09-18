@@ -1,4 +1,4 @@
-insert into myapp_song(rank,song,artist) values
+insert into myapp_song(rank,artist,song) values
 (100,"Sammy Hagar","I Can’t Drive 55"                       ),
 (99,"Kansas","Carry on Wayward Son"                         ),
 (98,"Scorpions","Rock You Like a Hurricane"                 ),

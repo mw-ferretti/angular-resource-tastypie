@@ -9,7 +9,7 @@
     <script src="controller.js"></script>
     
     <style>
-        #meta, #form { float: left }
+        .group { float: left }
         .clear { clear: both }
         .container { padding: 10px }
     </style>
@@ -19,7 +19,7 @@
     
     <h2><u>Angular Resource Tastypie</u></h2>
     
-    <div id="meta" class="container">
+    <div class="container group">
         <h3>Meta</h3>
         <ul>
             <li>Endpoint: {{ Song.endpoint }}</li>
@@ -31,7 +31,7 @@
         </ul>
     </div>
     
-    <div id="form" class="container">
+    <div class="container group">
         <h3>Form</h3>
         <form name="myForm">
             ID: {{song.id}} <br>
@@ -58,18 +58,35 @@
     
     <div class="clear"> </div>
     
-    <div id="paginator" class="container">
-        <h3>Pagination control</h3>
+    <div class="container group">
+        <h3>Pagination control server-side</h3>
         <input type="button" ng-click="Song.page.first()" ng-disabled="!Song.page.meta.previous" value="First">
         <input type="button" ng-click="Song.page.previous()" ng-disabled="!Song.page.meta.previous" value="Previous">
-        <b>{{Song.page.index}}/{{Song.page.len}}</b>
+        <b ng-show="Song.page.len">{{Song.page.index}}/{{Song.page.len}}</b>
         <input type="button" ng-click="Song.page.next()" ng-disabled="!Song.page.meta.next" value="Next">
         <input type="button" ng-click="Song.page.last()" ng-disabled="!Song.page.meta.next" value="Last">
     </div>
     
+    <div class="container group">
+        <h3>Search server-side</h3>
+        <input ng-model="filter" type="search" ng-change="Song.objects.$find({artist__contains:filter})">
+    </div>
+    
+    <div class="container group">
+        <h3>Limit</h3>
+        <select 
+                ng-options="limit for limit in [5, 10, 15]" 
+                ng-model="Song.defaults.limit"
+                ng-change="Song.page.refresh();"
+        >
+        </select>
+    </div>
+    
+    <div class="clear"> </div>
+    
     <div id="objects" class="container">
         <h3>Objects</h3>
-        <table border="0">
+        <table border="0" ng-show="Song.page.objects.length">
             <thead>
                 <th>Id</th>
                 <th>Rank</th>
@@ -88,7 +105,13 @@
                 </tr>
             </tbody>
         </table>
+        <p ng-show="!Song.page.objects.length">No result</p>
     </div>
-
+    
+    <p>
+        <h4>All with just a single object:</h4>
+        $scope.Song = new $tastypieResource('song', {limit:5});
+    </p>
+    Have a good time!
 </body>
 </html>

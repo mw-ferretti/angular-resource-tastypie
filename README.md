@@ -104,13 +104,12 @@ $scope.Song.objects.$find({rank__lte:10}).then(
 );
 
 //or copying "$scope.Song.page"
-var result = $scope.Song.objects.$find(); //obj result have a paging control.. wow!!
+var result = $scope.Song.objects.$find();
 
 /*
+** All the returned objects (from list_endpoint) have a paging control server-side **
 
-** All the returned objects (from list_endpoint) have a paging control **
-
-Paging Control
+Paging Control Server-Side
 
 Attributes:
 $scope.Song.endpoint;
@@ -131,7 +130,6 @@ $scope.Song.page.previous();
 $scope.Song.page.refresh();
 $scope.Song.page.first();
 $scope.Song.page.last();
-
 */
 ```
 
