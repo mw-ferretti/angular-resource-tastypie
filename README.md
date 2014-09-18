@@ -33,12 +33,12 @@ view.html
 ...
 ```
 
-**Add the module dependency:**
+-<h5>Add the module dependency:</h5>
 ```javascript
 angular.module('myApp', ['ngResourceTastypie'])
 ```
 
-**Add your web services provider configuration:**
+-<h5>Add your web services provider configuration:</h5>
 ```javascript
 .config(function($tastypieProvider){
     $tastypieProvider.setResourceUrl('http://127.0.0.1:8001/api/v1/');
@@ -60,8 +60,7 @@ http://django-tastypie.readthedocs.org/en/latest/authentication.html
 </p>
 </blockquote>
 
-**Add dependency in the scope:**
-```javascript
+-<h5>Add dependency in the scope:</h5>
 .controller('MyCtrl', ['$scope', '$tastypieResource', function($scope, $tastypieResource){
     ...
 }]);
@@ -142,7 +141,6 @@ song.artist = "Aerosmith"
 song.$save();
 
 //or
-
 $scope.Song.objects.$create({
     rank: 1,
     song: "Sweet Emotion",
@@ -150,7 +148,6 @@ $scope.Song.objects.$create({
 }).$save();
 
 //or with callback
-
 $scope.Song.objects.$create({
     rank: 1,
     song: "Sweet Emotion",
