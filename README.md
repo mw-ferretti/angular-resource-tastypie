@@ -76,7 +76,7 @@ We have a service called "song", responsible for providing the "TOP 100 SONGS CL
 ```
 http://127.0.0.1:8001/api/v1/song/
 ```
-then:
+Then:
 ```javascript
 $scope.Song = new $tastypieResource('song');
 //or
