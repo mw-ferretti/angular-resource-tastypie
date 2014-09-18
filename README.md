@@ -33,12 +33,12 @@ view.html
 ...
 ```
 
--<h5>Add the module dependency:</h5>
+- <h5>Add the module dependency:</h5>
 ```javascript
 angular.module('myApp', ['ngResourceTastypie'])
 ```
 
--<h5>Add your web services provider configuration:</h5>
+- <h5>Add your web services provider configuration:</h5>
 ```javascript
 .config(function($tastypieProvider){
     $tastypieProvider.setResourceUrl('http://127.0.0.1:8001/api/v1/');
@@ -60,7 +60,7 @@ http://django-tastypie.readthedocs.org/en/latest/authentication.html
 </p>
 </blockquote>
 
--<h5>Add dependency in the scope:</h5>
+- <h5>Add dependency in the scope:</h5>
 .controller('MyCtrl', ['$scope', '$tastypieResource', function($scope, $tastypieResource){
     ...
 }]);
