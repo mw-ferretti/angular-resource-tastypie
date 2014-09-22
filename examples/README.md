@@ -12,7 +12,7 @@ Django admin superuser "admin", password "1234"
 ```
 
 ##Frontend:
-1. cd frontend
+1. cd frontend/
 2. python -m SimpleHTTPServer
 
 ```
