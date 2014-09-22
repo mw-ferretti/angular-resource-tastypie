@@ -31,6 +31,10 @@ view.html
     <script src="angular-resource-tastypie.min.js"></script>
     <script src="controller.js"></script>
 ...
+
+```
+```
+    See a complete example [here](https://github.com/mw-ferretti/angular-resource-tastypie/tree/master/examples) ...
 ```
 
 - <h5>Add the module dependency:</h5>
