@@ -105,9 +105,6 @@ $scope.Song.objects.$find({rank__lte:10}).then(
     }
 );
 
-//or copying "$scope.Song.page"
-var result = $scope.Song.objects.$find();
-
 /*
 Paging Control Server-Side
 
@@ -179,4 +176,10 @@ song.$save();
 //updating
 song.rank = 2
 song.$save()
+```
+
+- <h5>Deleting objects</h5>
+```javascript
+//...
+song.$delete()
 ```
