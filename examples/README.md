@@ -7,6 +7,10 @@
 4. ./manager syncdb
 5. ./manager runserver 0.0.0.0:8001
 
+```
+Django admin superuser "admin", password "1234"
+```
+
 ##Frontend:
 1. cd frontend
 2. python -m SimpleHTTPServer
