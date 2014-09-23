@@ -77,7 +77,7 @@
         <select 
                 ng-options="limit for limit in [5, 10, 15]" 
                 ng-model="Song.defaults.limit"
-                ng-change="Song.page.refresh();"
+                ng-change="Song.objects.$find();"
         >
         </select>
     </div>

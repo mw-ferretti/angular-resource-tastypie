@@ -8,8 +8,8 @@ angular.module('myApp', ['ngResourceTastypie'])
 .controller('MyCtrl', ['$scope', '$tastypieResource', function($scope, $tastypieResource){
 
     $scope.Song = new $tastypieResource('song', {limit:5});
-    $scope.Song.objects.$find();
-
+    $scope.Song.objects.$find(); 
+    
     $scope.song = $scope.Song.objects.$create();
     
 }]);

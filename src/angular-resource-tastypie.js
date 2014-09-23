@@ -80,7 +80,7 @@ angular.module('ngResourceTastypie',['ngResource'])
         self.objects = result.objects;
         self.len = Math.ceil(result.meta.total_count / result.meta.limit);
 
-        if(result.meta.offset == 0) self.index = 1;
+        if (result.meta.offset == 0) self.index = 1;
         else self.index = (Math.ceil(result.meta.offset / result.meta.limit)+1);
         
         var pgs = [];
@@ -150,44 +150,55 @@ angular.module('ngResourceTastypie',['ngResource'])
 }])
 
 
-.factory('$tastypieObjects',['$resource','$tastypiePaginator', function($resource, $tastypiePaginator){
+.factory('$tastypieObjects', ['$resource', '$tastypiePaginator', function($resource, $tastypiePaginator){
 
     function $tastypieObjects(tastypieResource){
         this.resource = tastypieResource;
     }
-
-    $tastypieObjects.prototype.$create = function(data){
-
-        var self = this;
+    
+    function create(self, data){
 
         var custom_method = {
+            'post':{method:'POST'},
             'save':{method:'POST'},
+            'get':{method:'GET', url:self.resource.endpoint+":id%2f"},
+            'find_one':{method:'GET', url:self.resource.endpoint+":id%2f"},
             'update':{method:'PUT', url:self.resource.endpoint+":id%2f"},
             'delete':{method:'DELETE', url:self.resource.endpoint+":id%2f"},
-            'rm':{method:'DELETE', url:self.resource.endpoint+":id%2f"},
-            'sv':{method:'POST'}
+            'remove':{method:'DELETE', url:self.resource.endpoint+":id%2f"}            
         };
 
         var obj = $resource(self.resource.endpoint, {id:'@id'}, custom_method);
 
-        delete obj.prototype['$get'];
         delete obj.prototype['$query'];
-        delete obj.prototype['$remove'];
+        
+        obj.prototype.$get = function(data){            
+            var filter = data || this;            
+            if(!filter.hasOwnProperty('id')) throw 'attribute [id] is required.';
+            return this.$find_one(filter);
+        };
 
-        obj.prototype.$save = function(){            
-            var resp = this.$sv();            
+        obj.prototype.$save = function(){
+            var fields = this;
+            var resp = null;
+            
+            if(fields.hasOwnProperty('id')){
+                resp = this.$update();
+            }else{
+                resp = this.$post();
+            }           
             resp.then(
                 function(result){
                     if (typeof(self.resource.page.refresh) == typeof(Function))
                         self.resource.page.refresh();
                 }           
-            );                
+            );        
             return resp;
         };
 
         obj.prototype.$delete = function(){
             var fields = this;
-            return this.$rm().then(function(){
+            return this.$remove().then(function(){
                 angular.forEach(fields, function(value, key){delete fields[key]});
                 if (typeof(self.resource.page.refresh) == typeof(Function))
                         self.resource.page.refresh();
@@ -197,53 +208,63 @@ angular.module('ngResourceTastypie',['ngResource'])
         obj.prototype.$clear = function(){
             var fields = this;
             angular.forEach(fields, function(value, key){delete fields[key]});
-        }
+        };
 
         return new obj(data);
-    };
-
-    $tastypieObjects.prototype.$find = function(filters){
-
-        var self = this,
-            obj = $resource(self.resource.endpoint, self.resource.defaults, {
-                'find': {method:'GET'},
-                'get': {method:'GET'}
-            });
-
+    };    
+    
+    function find(self){
+            
+        var custom_method = {
+            'get':{method:'GET'},
+            'find':{method:'GET'}
+        };
+        
+        var obj = $resource(self.resource.endpoint, self.resource.defaults, custom_method);        
         delete obj.prototype['$query'];
         delete obj.prototype['$save'];
-
-        obj.prototype.$find = function(data){
-
-            var resp = this.$get(data),
-                find = this;
+        
+        obj.prototype.$find = function(filter){
+            
+            var resp = this.$get(filter),
+                self_resp = this;
 
             resp.then(
                 function(result){
-                    self.resource.page = new $tastypiePaginator(self.resource, data, result);
-                    find.page = self.resource.page;
-                    delete find['meta'];
-                    delete find['objects'];
+                    self.resource.page = new $tastypiePaginator(self.resource, filter, result);
+                    self_resp.page = self.resource.page;                    
+                    delete self_resp['meta'];
+                    delete self_resp['objects'];
                 },
                 function(error){
                     self.resource.page = {};
-                    find.page = {};
+                    self_resp.page = {};
                 }
             );
 
             return resp;
         };
-
-        var res = new obj();
-
-        return res.$find(filters);
+        
+        return new obj();   
+    }
+    
+    $tastypieObjects.prototype.$create = function(data){
+        return create(this, data);
+    };
+    
+    $tastypieObjects.prototype.$get = function(data){
+        return create(this, data).$get();
+    };
+    
+    $tastypieObjects.prototype.$find = function(data){
+        return find(this).$find(data);
     };
 
     return $tastypieObjects;
 }])
 
 
-.factory('$tastypieResource', ['$resource','$tastypie','$tastypiePaginator','$tastypieObjects', function($resource,$tastypie,$tastypiePaginator,$tastypieObjects){
+.factory('$tastypieResource', ['$resource', '$tastypie', '$tastypiePaginator', '$tastypieObjects', function($resource, $tastypie, $tastypiePaginator, $tastypieObjects){
 
         function $tastypieResource(service, default_filters) {
 
