@@ -1,3 +1,5 @@
+delete from myapp_song;
+VACUUM; 
 insert into myapp_song(rank,artist,song) values
 (100,"Sammy Hagar","I Can’t Drive 55"                       ),
 (99,"Kansas","Carry on Wayward Son"                         ),

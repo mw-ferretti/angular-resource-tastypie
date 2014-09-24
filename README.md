@@ -131,6 +131,17 @@ $scope.Song.page.refresh();
 $scope.Song.page.first();
 $scope.Song.page.last();
 */
+
+//or from resource_uri
+//In this case, there is no paging. An "$tastypieObjects" (has CRUD) is returned.
+$scope.Song.objects.$get({id:100}).then(
+    function(result){
+        console.log(result);
+    },
+    function(error){
+        console.log(error);
+    }
+);
 ```
 
 - <h5>Creating objects</h5>
@@ -179,10 +190,30 @@ song.$save();
 //updating
 song.rank = 2
 song.$save()
+
+//or from resource_uri
+//An "$tastypieObjects" (has CRUD) is returned.
+$scope.Song.objects.$get({id:100}).then(
+    function(result){
+        result.rank += 1;
+        result.$save();
+    }
+);
 ```
 
 - <h5>Deleting objects</h5>
 ```javascript
-//...
+//creating
+var song = $scope.Song.objects.$create();
+song.rank = 1
+song.song = "Sweet Emotion"
+song.artist = "Aerosmith"
+song.$save();
+
+//deleting
 song.$delete()
+
+//or from resource_uri
+$scope.Song.objects.$delete({id:100});
+
 ```

@@ -162,7 +162,7 @@ angular.module('ngResourceTastypie',['ngResource'])
             'post':{method:'POST'},
             'save':{method:'POST'},
             'get':{method:'GET', url:self.resource.endpoint+":id%2f"},
-            'find_one':{method:'GET', url:self.resource.endpoint+":id%2f"},
+            'get_uri':{method:'GET', url:self.resource.endpoint+":id%2f"},
             'update':{method:'PUT', url:self.resource.endpoint+":id%2f"},
             'delete':{method:'DELETE', url:self.resource.endpoint+":id%2f"},
             'remove':{method:'DELETE', url:self.resource.endpoint+":id%2f"}            
@@ -175,7 +175,13 @@ angular.module('ngResourceTastypie',['ngResource'])
         obj.prototype.$get = function(data){            
             var filter = data || this;            
             if(!filter.hasOwnProperty('id')) throw 'attribute [id] is required.';
-            return this.$find_one(filter);
+            return this.$get_uri(filter);
+        };
+        
+        obj.prototype.$delete = function(data){            
+            var filter = data || this;            
+            if(!filter.hasOwnProperty('id')) throw 'attribute [id] is required.';
+            return this.$remove(filter);
         };
 
         obj.prototype.$save = function(){
@@ -254,6 +260,10 @@ angular.module('ngResourceTastypie',['ngResource'])
     
     $tastypieObjects.prototype.$get = function(data){
         return create(this, data).$get();
+    };
+    
+    $tastypieObjects.prototype.$delete = function(data){
+        return create(this, data).$delete();
     };
     
     $tastypieObjects.prototype.$find = function(data){
