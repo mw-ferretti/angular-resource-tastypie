@@ -15,6 +15,6 @@ class SongResource(ModelResource):
         filtering = {
             'id': ['exact'],
             'rank': ['exact'],
-            'song': ['contains'],
-            'artist': ['contains'],
+            'song': ['icontains'],
+            'artist': ['icontains'],
         }

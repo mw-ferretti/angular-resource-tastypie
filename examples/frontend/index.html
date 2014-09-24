@@ -69,7 +69,7 @@
     
     <div class="container group">
         <h3>Search server-side</h3>
-        <input ng-model="filter" type="search" ng-change="Song.objects.$find({artist__contains:filter})">
+        <input ng-model="filter" type="search" ng-change="Song.objects.$find({artist__icontains:filter})">
     </div>
     
     <div class="container group">
