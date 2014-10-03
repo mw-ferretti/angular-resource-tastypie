@@ -5,6 +5,9 @@ with improvements for [django-tastypie](https://django-tastypie.readthedocs.org/
 ##Requirements
 - AngularJs
 
+##Class Diagram
+![Class Diagram](/dev/ClassDiagram.png)
+
 ##Usage
 controller.js
 ```javascript
@@ -236,6 +239,3 @@ song.$delete()
 $scope.Song.objects.$delete({id:100});
 
 ```
-
-##Class Diagram
-![Class Diagram](/dev/ClassDiagram.png)
