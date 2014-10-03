@@ -191,12 +191,31 @@ song.$save();
 song.rank = 2
 song.$save()
 
-//or from resource_uri
+//or from get
 //An "$tastypieObjects" (has CRUD) is returned.
 $scope.Song.objects.$get({id:100}).then(
     function(result){
         result.rank += 1;
         result.$save();
+    }
+);
+
+//or from resource_uri
+$scope.Song.objects.$update({
+    id:100,
+    song:'Sweet Emotion ...'
+});
+
+//or from resource_uri with callback
+$scope.Song.objects.$update({
+    id:100,
+    song:'Sweet Emotion'
+}).then(
+    function(result){
+        console.log(result);
+    },
+    function(error){
+        console.log(error);
     }
 );
 ```
@@ -217,3 +236,6 @@ song.$delete()
 $scope.Song.objects.$delete({id:100});
 
 ```
+
+##Class Diagram
+![Class Diagram](/dev/ClassDiagram.png)
