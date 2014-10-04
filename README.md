@@ -3,7 +3,7 @@ The base [angular-resource](https://docs.angularjs.org/api/ngResource/service/$r
 with improvements for [django-tastypie](https://django-tastypie.readthedocs.org/en/latest/).
 
 ##Requirements
-- AngularJs
+- [AngularJs](https://angularjs.org/)
 
 ##Class Diagram
 ![Class Diagram](/dev/ClassDiagram.png)
