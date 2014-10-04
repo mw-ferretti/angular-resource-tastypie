@@ -12,13 +12,4 @@ angular.module('myApp', ['ngResourceTastypie'])
     
     $scope.song = $scope.Song.objects.$create();
     
-    $scope.Song.objects.$update({
-        id:100,
-        song:'Sweet Emotion'
-    }).then(
-        function(result){
-            console.log(result);
-        }
-    );
-    
 }]);
