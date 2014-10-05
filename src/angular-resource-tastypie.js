@@ -216,7 +216,7 @@ angular.module('ngResourceTastypie',['ngResource'])
         obj.prototype.$delete = function(data){
             var obj = data || this;
             var fields = this;
-            if(!fields.hasOwnProperty('id')) throw 'attribute [id] is required.';
+            if(!obj.hasOwnProperty('id')) throw 'attribute [id] is required.';
             return this.$remove(obj).then(function(){
                 angular.forEach(fields, function(value, key){delete fields[key]});
                 if (typeof(self.resource.page.refresh) == typeof(Function))
