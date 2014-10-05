@@ -178,12 +178,6 @@ angular.module('ngResourceTastypie',['ngResource'])
             if(!filter.hasOwnProperty('id')) throw 'attribute [id] is required.';
             return this.$get_uri(filter);
         };
-        
-        obj.prototype.$delete = function(data){            
-            var filter = data || this;            
-            if(!filter.hasOwnProperty('id')) throw 'attribute [id] is required.';
-            return this.$remove(filter);
-        };
 
         obj.prototype.$save = function(){
             var fields = this;
@@ -219,10 +213,12 @@ angular.module('ngResourceTastypie',['ngResource'])
             return resp;
         };
 
-        obj.prototype.$delete = function(){
-            var fields = this;
+        obj.prototype.$delete = function(data){
+            var fields = data || this;
+            var this_obj = this;
+            if(!fields.hasOwnProperty('id')) throw 'attribute [id] is required.';
             return this.$remove().then(function(){
-                angular.forEach(fields, function(value, key){delete fields[key]});
+                angular.forEach(this_obj, function(value, key){delete fields[key]});
                 if (typeof(self.resource.page.refresh) == typeof(Function))
                         self.resource.page.refresh();
             });
