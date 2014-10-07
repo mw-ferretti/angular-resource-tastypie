@@ -3,7 +3,7 @@ The base [angular-resource](https://docs.angularjs.org/api/ngResource/service/$r
 with improvements for [django-tastypie](https://django-tastypie.readthedocs.org/en/latest/).
 
 ##Context
-RESTful
+[RESTful](http://www.ibm.com/developerworks/library/ws-restful/)
 
 ##Requirements
 [AngularJs](https://angularjs.org/)
