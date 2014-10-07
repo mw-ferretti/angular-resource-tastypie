@@ -62,7 +62,7 @@ $tastypieProvider.setAuth('username','api_key');
 <blockquote>
 <p>
 This api_key was fixed only for demonstration. 
-You must generate a dynamic key during the login User, 
+You must generate a dynamic key during the login user, 
 in its authorization system, and then configure this attribute. 
 With django-tastypie this task is quite simple: 
 http://django-tastypie.readthedocs.org/en/latest/authentication.html
