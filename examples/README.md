@@ -13,8 +13,7 @@ Django admin superuser "admin", password "1234"
 
 ##Frontend:
 1. cd frontend/
-2. python -m SimpleHTTPServer
-
+2. python3 -m http.server
 ```
 Now, open your browser and go to 127.0.0.1:8000
 ```
