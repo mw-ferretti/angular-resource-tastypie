@@ -2,8 +2,11 @@
 The base [angular-resource](https://docs.angularjs.org/api/ngResource/service/$resource) 
 with improvements for [django-tastypie](https://django-tastypie.readthedocs.org/en/latest/).
 
+##Context
+RESTful
+
 ##Requirements
-- [AngularJs](https://angularjs.org/)
+[AngularJs](https://angularjs.org/)
 
 ##Class Diagram
 ![Class Diagram](/dev/ClassDiagram.png)
