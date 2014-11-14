@@ -5,8 +5,7 @@
  */
 angular.module('ngResourceTastypie',['ngResource'])
 
-
-.provider('$tastypie', function($httpProvider) {
+.provider('$tastypie', function($httpProvider){
 
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
@@ -17,10 +16,12 @@ angular.module('ngResourceTastypie',['ngResource'])
 
     var auth = {
         username : '',
-        apikey : ''
+        api_key : ''
     };
+    
+    var routes_exception = {};    
 
-    this.setResourceUrl = function(url) {
+    this.setResourceUrl = function(url){
         resource_url = url;
 
         var dominio  = document.createElement('a');
@@ -29,47 +30,76 @@ angular.module('ngResourceTastypie',['ngResource'])
         if (dominio.port != '') resource_domain = resource_domain+':'+dominio.port;
     };
 
-    this.setAuth = function(username, apikey) {
+    this.setAuth = function(username, apikey){
         auth.username = username;
-        auth.apikey = apikey;
+        auth.api_key = apikey;
 
-        $httpProvider.defaults.headers.common['Authorization'] = 'ApiKey '+auth.username+':'+auth.apikey;
+        $httpProvider.defaults.headers.common['Authorization'] = 'ApiKey '+auth.username+':'+auth.api_key;
+    };
+    
+    this.getRoutesException = function(){
+        return routes_exception;
+    };
+    
+    this.setRoutesException = function(data){
+        if(!data) throw '[$tastypie] Arg0 [data] is required.';
+        if(!angular.isObject(data)) throw '[$tastypie] Arg0 [data] is not object.';
+        routes_exception = data;
+    };
+    
+    this.getAuth = function(){
+        return auth;
     };
 
-    this.getResourceUrl = function() {
+    this.getResourceUrl = function(){
         return resource_url;
     };
 
-    this.getResourceDomain = function() {
+    this.getResourceDomain = function(){
         return resource_domain;
     };
 
-    this.$get = function() {
+    this.$get = function(){
         return {
             resource_url:this.getResourceUrl(),
-            resource_domain:this.getResourceDomain()
+            resource_domain:this.getResourceDomain(),
+            auth:this.getAuth(),
+            routes_exception:this.getRoutesException(),
+            setAuth:this.setAuth, 
+            setResourceUrl:this.setResourceUrl,
+            setRoutesException:this.setRoutesException
         }
     };
 })
 
+.service('$RouteException', ['$location', '$tastypie', function($location, $tastypie){
+    var routes = {};
+    
+    this.redirect = function(httpCode){
+        routes = $tastypie.routes_exception;
+        if(!routes.hasOwnProperty(String(httpCode))) return false;
+        $location.path(routes[String(httpCode)]);
+        return true;
+    }
+}])
 
-.factory('$tastypiePaginator', ['$resource', '$tastypie', function($resource, $tastypie){
+.factory('$tastypiePaginator', ['$resource', '$tastypie', '$RouteException', function($resource, $tastypie, $RouteException){
 
     function $tastypiePaginator(tastypieResource, filters, result){
 
         this.resource = tastypieResource;
         this.filters = filters || {};
-        this.meta = {},
-        this.objects = [],
-        this.index = 0,
-        this.len = 0,
+        this.meta = {};
+        this.objects = [];
+        this.index = 0;
+        this.len = 0;
         this.range = [];
 
-        setPage(this,result);
+        setPage(this, result);
     }
 
     function setPage(self, result){
-        if (!angular.isObject(result.meta)) throw 'Invalid django-tastypie obj';
+        if (!angular.isObject(result.meta)) throw '[$tastypiePaginator] Invalid django-tastypie object.';
 
         self.meta = result.meta;
 
@@ -89,13 +119,14 @@ angular.module('ngResourceTastypie',['ngResource'])
     }
 
     function getPage(self, end_url){
-        if (end_url) {
+        if (end_url){
             $resource(end_url).get().$promise.then(
                 function(result){
                     setPage(self, result);
                 },
                 function(error) {
-                    throw error;
+                    if(!$RouteException.redirect(error.status))
+                        throw '[$tastypiePaginator] '.concat(error.statusText);
                 }
             );
         }
@@ -108,22 +139,22 @@ angular.module('ngResourceTastypie',['ngResource'])
             filters.offset = ((index-1)*self.meta.limit);
             
             $resource(self.resource.endpoint, self.resource.defaults).get(filters).$promise.then(
-                function(result){       
-                    
+                function(result){                    
                     if(result.meta.offset == result.meta.total_count)
                         changePage(self, (index - 1), true);
                     else
                         setPage(self, result);
                 },
                 function(error){
-                    throw error;
+                    if(!$RouteException.redirect(error.status))
+                        throw '[$tastypiePaginator] '.concat(error.statusText);
                 }
             );
         }
     }
 
     $tastypiePaginator.prototype.change = function(index){
-        if(index) changePage(this,index,false);
+        if (index) changePage(this,index,false);
     };
 
     $tastypiePaginator.prototype.next = function(){
@@ -150,7 +181,7 @@ angular.module('ngResourceTastypie',['ngResource'])
 }])
 
 
-.factory('$tastypieObjects', ['$resource', '$tastypiePaginator', function($resource, $tastypiePaginator){
+.factory('$tastypieObjects', ['$resource', '$tastypiePaginator', '$RouteException', function($resource, $tastypiePaginator, $RouteException){
 
     function $tastypieObjects(tastypieResource){
         this.resource = tastypieResource;
@@ -175,8 +206,17 @@ angular.module('ngResourceTastypie',['ngResource'])
         
         obj.prototype.$get = function(data){            
             var filter = data || this;            
-            if(!filter.hasOwnProperty('id')) throw 'attribute [id] is required.';
-            return this.$get_uri(filter);
+            if(!filter.hasOwnProperty('id')) throw '[$tastypieObjects] Attribute [id] is required.';
+            var resp = this.$get_uri(filter);
+            
+            resp.then(
+                null,
+                function(error){
+                    if(!$RouteException.redirect(error.status))
+                        throw '[$tastypieObjects] '.concat(error.statusText);
+                }
+            );
+            return resp;        
         };
 
         obj.prototype.$save = function(){
@@ -192,14 +232,18 @@ angular.module('ngResourceTastypie',['ngResource'])
                 function(result){
                     if (typeof(self.resource.page.refresh) == typeof(Function))
                         self.resource.page.refresh();
-                }           
+                },
+                function(error){
+                    if(!$RouteException.redirect(error.status))
+                        throw '[$tastypieObjects] '.concat(error.statusText);
+                }
             );        
             return resp;
         };
         
         obj.prototype.$update = function(data){            
             var obj = data || this;            
-            if(!obj.hasOwnProperty('id')) throw 'attribute [id] is required.';
+            if(!obj.hasOwnProperty('id')) throw '[$tastypieObjects] Attribute [id] is required.';
             
             var resp = null;
             resp = this.$put(obj);
@@ -208,7 +252,11 @@ angular.module('ngResourceTastypie',['ngResource'])
                 function(result){
                     if (typeof(self.resource.page.refresh) == typeof(Function))
                         self.resource.page.refresh();
-                }           
+                },
+                function(error){
+                    if(!$RouteException.redirect(error.status))
+                        throw '[$tastypieObjects] '.concat(error.statusText);
+                }
             );        
             return resp;
         };
@@ -216,12 +264,19 @@ angular.module('ngResourceTastypie',['ngResource'])
         obj.prototype.$delete = function(data){
             var obj = data || this;
             var fields = this;
-            if(!obj.hasOwnProperty('id')) throw 'attribute [id] is required.';
-            return this.$remove(obj).then(function(){
-                angular.forEach(fields, function(value, key){delete fields[key]});
-                if (typeof(self.resource.page.refresh) == typeof(Function))
-                        self.resource.page.refresh();
-            });
+            if(!obj.hasOwnProperty('id')) throw '[$tastypieObjects] Attribute [id] is required.';
+            var resp = this.$remove(obj).then(
+                function(){
+                    angular.forEach(fields, function(value, key){delete fields[key]});
+                    if (typeof(self.resource.page.refresh) == typeof(Function))
+                            self.resource.page.refresh();
+                },
+                function(error){
+                    if(!$RouteException.redirect(error.status))
+                        throw '[$tastypieObjects] '.concat(error.statusText);
+                }                                             
+            );
+            return resp;
         };
         
         obj.prototype.$clear = function(){
@@ -258,6 +313,8 @@ angular.module('ngResourceTastypie',['ngResource'])
                 function(error){
                     self.resource.page = {};
                     self_resp.page = {};
+                    if(!$RouteException.redirect(error.status))
+                        throw '[$tastypieObjects] '.concat(error.statusText);
                 }
             );
 
@@ -295,7 +352,7 @@ angular.module('ngResourceTastypie',['ngResource'])
 
         function $tastypieResource(service, default_filters) {
 
-            if (!service) throw 'unknown service name';
+            if (!service) throw '[$tastypieResource] Unknown service name.';
 
             this.endpoint = $tastypie.resource_url+service+'%2f';
             this.defaults = default_filters || {};
