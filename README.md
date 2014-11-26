@@ -1,6 +1,10 @@
 #angular-resource-tastypie
-The base [angular-resource](https://docs.angularjs.org/api/ngResource/service/$resource) 
-with improvements for [django-tastypie](https://django-tastypie.readthedocs.org/en/latest/).
+Client [RESTful](http://www.ibm.com/developerworks/library/ws-restful/) for [django-tastypie](https://django-tastypie.readthedocs.org/en/latest/) or [equivalent schema](http://django-tastypie.readthedocs.org/en/latest/interacting.html#front-matter).
+
+<h5>Features:</h5>
+1. Paging system
+2. complete CRUD
+3. Abstracts [ajax(j)](http://en.wikipedia.org/wiki/Ajax_(programming)) with syntax similar to Django-ORM
 
 ##Context
 [RESTful](http://www.ibm.com/developerworks/library/ws-restful/)
