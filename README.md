@@ -4,7 +4,7 @@
 <h5>Features:</h5>
 1. Paging system
 2. complete CRUD
-3. Abstracts [ajax(j)](http://en.wikipedia.org/wiki/Ajax_(programming)) with syntax similar to Django-ORM
+3. Abstracts [ajax(j)](http://en.wikipedia.org/wiki/Ajax_(programming)) with syntax similar to an ORM.
 
 ##Context
 [RESTful](http://www.ibm.com/developerworks/library/ws-restful/)
