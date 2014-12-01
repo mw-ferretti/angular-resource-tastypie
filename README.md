@@ -3,8 +3,8 @@
 
 <h5>Features:</h5>
 1. Paging system
-2. complete CRUD
-3. Abstracts [ajax(j)](http://en.wikipedia.org/wiki/Ajax_(programming)) with syntax similar to an ORM.
+2. complete [CRUD](http://en.wikipedia.org/wiki/Create,_read,_update_and_delete)
+3. Abstracts [ajax(j)](http://en.wikipedia.org/wiki/Ajax_(programming)) with syntax similar to an [ORM](http://en.wikipedia.org/wiki/Object-relational_mapping)
 
 ##Context
 [RESTful](http://www.ibm.com/developerworks/library/ws-restful/)
