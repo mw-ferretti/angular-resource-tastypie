@@ -1,5 +1,5 @@
 #angular-resource-tastypie
-Client [RESTful](http://www.ibm.com/developerworks/library/ws-restful/) for [django-tastypie](https://django-tastypie.readthedocs.org/en/latest/) or [equivalent schema](http://django-tastypie.readthedocs.org/en/latest/interacting.html#front-matter).
+[RESTful](http://www.ibm.com/developerworks/library/ws-restful/) angularJs client for [django-tastypie](https://django-tastypie.readthedocs.org/en/latest/) or equivalent schema.
 
 <h5>Features:</h5>
 1. Paging system
