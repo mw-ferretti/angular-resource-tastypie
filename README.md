@@ -16,7 +16,6 @@
 ![Class Diagram](/dev/ClassDiagram.png)
 
 ##Usage
-controller.js
 ```javascript
 angular.module('myApp', ['ngResourceTastypie'])
 
@@ -33,19 +32,6 @@ angular.module('myApp', ['ngResourceTastypie'])
 }]);
 ```
 
-view.html
-```html
-...
-    <script src="angular.min.js"></script>
-    <script src="angular-resource.min.js"></script>
-    <script src="angular-resource-tastypie.min.js"></script>
-    <script src="controller.js"></script>
-...
-
-<!-- See a complete example in '/examples/frontend/' -->
-
-```
-
 - <h5>Add the module dependency:</h5>
 ```javascript
 angular.module('myApp', ['ngResourceTastypie'])
@@ -57,6 +43,13 @@ angular.module('myApp', ['ngResourceTastypie'])
     $tastypieProvider.setResourceUrl('http://127.0.0.1:8001/api/v1/');
     $tastypieProvider.setAuth('admin','320c4e7da6ed93946f97f51e6f4c8354a098bb6e');
 })
+```
+
+- <h5>Add dependency in the scope:</h5>
+```javascript
+.controller('MyCtrl', ['$scope', '$tastypieResource', function($scope, $tastypieResource){
+    ...
+}]);
 ```
 
 *NOTE*
@@ -72,13 +65,6 @@ With django-tastypie this task is quite simple:
 http://django-tastypie.readthedocs.org/en/latest/authentication.html
 </p>
 </blockquote>
-
-- <h5>Add dependency in the scope:</h5>
-```javascript
-.controller('MyCtrl', ['$scope', '$tastypieResource', function($scope, $tastypieResource){
-    ...
-}]);
-```
 
 ## $tastypieResource
 This class is responsible by connect on the specific "list endpoint".
