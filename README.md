@@ -12,9 +12,6 @@
 ##Requirements
 [AngularJs](https://angularjs.org/)
 
-##Class Diagram
-![Class Diagram](/dev/ClassDiagram.png)
-
 ##Usage
 ```javascript
 angular.module('myApp', ['ngResourceTastypie'])
@@ -232,3 +229,6 @@ song.$delete()
 $scope.Song.objects.$delete({id:100});
 
 ```
+
+##Class Diagram
+![Class Diagram](/dev/ClassDiagram.png)
