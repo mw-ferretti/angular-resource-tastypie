@@ -3,8 +3,8 @@
 
 <h5>Features:</h5>
 1. Paging system
-2. Complete [CRUD](http://en.wikipedia.org/wiki/Create,_read,_update_and_delete)
-3. Abstracts [ajax(j)](http://en.wikipedia.org/wiki/Ajax_(programming)) with syntax similar to an [ORM](http://en.wikipedia.org/wiki/Object-relational_mapping)
+2. Complete CRUD
+3. Abstract AJAX(J) providing operation similar to the [Django Model API](https://docs.djangoproject.com/en/dev/topics/db/queries/)
 
 ##Context
 [RESTful](http://www.ibm.com/developerworks/library/ws-restful/)
