@@ -194,8 +194,9 @@ angular.module('ngResourceTastypie',['ngResource'])
             'save':{method:'POST'},
             'get':{method:'GET', url:self.resource.endpoint+":id%2f"},
             'get_uri':{method:'GET', url:self.resource.endpoint+":id%2f"},
-            'update':{method:'PUT', url:self.resource.endpoint+":id%2f"},
+            'update':{method:'PATCH', url:self.resource.endpoint+":id%2f"},
             'put':{method:'PUT', url:self.resource.endpoint+":id%2f"},
+            'patch':{method:'PATCH', url:self.resource.endpoint+":id%2f"},
             'delete':{method:'DELETE', url:self.resource.endpoint+":id%2f"},
             'remove':{method:'DELETE', url:self.resource.endpoint+":id%2f"}            
         };
@@ -224,7 +225,7 @@ angular.module('ngResourceTastypie',['ngResource'])
             var resp = null;
             
             if(fields.hasOwnProperty('id')){
-                resp = this.$update();
+                resp = this.$put();
             }else{
                 resp = this.$post();
             }           
@@ -246,7 +247,7 @@ angular.module('ngResourceTastypie',['ngResource'])
             if(!obj.hasOwnProperty('id')) throw '[$tastypieObjects] Attribute [id] is required.';
             
             var resp = null;
-            resp = this.$put(obj);
+            resp = this.$patch(obj);
             
             resp.then(
                 function(result){
