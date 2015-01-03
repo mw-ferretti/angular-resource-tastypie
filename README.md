@@ -11,8 +11,8 @@
 ![Architecture](/dev/arq_rest_angular_django.jpg)
 
 *IMPORTANT*
-Backend controllers: Security rules for data persistence and access.
-Frontend controllers: User Interface rules, only!
+- Backend controllers: Security rules for data persistence and access.
+- Frontend controllers: User Interface rules, only!
 
 ##Requirements
 [AngularJs](https://angularjs.org/)
