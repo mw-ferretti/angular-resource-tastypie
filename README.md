@@ -7,7 +7,8 @@
 3. Abstract AJAX(J) providing operation similar to the [Django Model API](https://docs.djangoproject.com/en/dev/topics/db/queries/)
 
 ##Context
-[RESTful](http://www.ibm.com/developerworks/library/ws-restful/)
+[RESTful](http://www.ibm.com/developerworks/library/ws-restful/) architecture with [angularjs](https://angularjs.org/) and [django](https://www.djangoproject.com/).
+![Architecture](/dev/arq_rest_angular_django.jpg)
 
 ##Requirements
 [AngularJs](https://angularjs.org/)
