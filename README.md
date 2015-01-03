@@ -54,7 +54,7 @@ angular.module('myApp', ['ngResourceTastypie'])
 }]);
 ```
 
-*NOTE*
+<h5>IMPORTANT:</h5>
 ```javascript
 $tastypieProvider.setAuth('username','api_key');
 ```
