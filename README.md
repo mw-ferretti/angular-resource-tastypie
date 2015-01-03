@@ -10,6 +10,10 @@
 [RESTful](http://www.ibm.com/developerworks/library/ws-restful/) architecture with [angularjs](https://angularjs.org/) and [django](https://www.djangoproject.com/).
 ![Architecture](/dev/arq_rest_angular_django.jpg)
 
+*IMPORTANT*
+Backend controllers: Security rules for data persistence and access.
+Frontend controllers: User Interface rules, only!
+
 ##Requirements
 [AngularJs](https://angularjs.org/)
 
