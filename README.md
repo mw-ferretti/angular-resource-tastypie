@@ -15,7 +15,7 @@
 - Frontend controllers: User Interface rules, only!
 
 ##Requirements
-- Frontend: [AngularJs](https://angularjs.org/)
+- Frontend: [AngularJs](https://angularjs.org/).
 - Backend:  [Django-Tastypie](https://django-tastypie.readthedocs.org/en/latest/) or equivalent schema.
 
 ##Usage
