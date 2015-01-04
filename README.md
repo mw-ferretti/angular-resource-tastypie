@@ -1,5 +1,5 @@
 #angular-resource-tastypie
-[RESTful](http://www.ibm.com/developerworks/library/ws-restful/) angularJs client for [django-tastypie](https://django-tastypie.readthedocs.org/en/latest/) or equivalent schema.
+[RESTful](http://www.ibm.com/developerworks/library/ws-restful/) AngularJs client for [Django-Tastypie](https://django-tastypie.readthedocs.org/en/latest/) or equivalent schema.
 
 <h5>Features:</h5>
 1. Paging system
@@ -15,7 +15,8 @@
 - Frontend controllers: User Interface rules, only!
 
 ##Requirements
-[AngularJs](https://angularjs.org/)
+- Frontend: [AngularJs](https://angularjs.org/)
+- Backend:  [Django-Tastypie](https://django-tastypie.readthedocs.org/en/latest/) or equivalent schema.
 
 ##Usage
 ```javascript
