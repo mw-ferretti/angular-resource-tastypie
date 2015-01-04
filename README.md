@@ -14,6 +14,12 @@
 - Backend controllers: Security rules for data persistence and access.
 - Frontend controllers: User Interface rules, only!
 
+<h5>Important benefits:</h5>
+- Async development between frontend and backend developers.
+- Reuse of web developers team to create mobile applications.
+- Complete separation between business rules and usability rules of user interface. 
+- Business rules are the same for different types of UI. We can create different UI with any other programming language, passing through the same business rules on the backend.
+
 ##Requirements
 - Frontend: [AngularJs](https://angularjs.org/).
 - Backend:  [Django-Tastypie](https://django-tastypie.readthedocs.org/en/latest/) or equivalent schema.
