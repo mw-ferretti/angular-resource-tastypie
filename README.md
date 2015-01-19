@@ -25,6 +25,10 @@
 - Frontend: [AngularJs](https://angularjs.org/).
 - Backend:  [Django-Tastypie](https://django-tastypie.readthedocs.org/en/latest/) or equivalent schema.
 
+**Note**
+It is necessary to always return data, in django-tastypie enable this option:
+[always_return_data = True](http://django-tastypie.readthedocs.org/en/latest/resources.html#always-return-data)
+
 ##Usage
 ```javascript
 angular.module('myApp', ['ngResourceTastypie'])
