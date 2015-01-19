@@ -25,9 +25,9 @@
 - Frontend: [AngularJs](https://angularjs.org/).
 - Backend:  [Django-Tastypie](https://django-tastypie.readthedocs.org/en/latest/) or equivalent schema.
 
-**Note**
+<h5>Note</h5>
 It is necessary to always return data, in django-tastypie enable this option:
-[always_return_data = True](http://django-tastypie.readthedocs.org/en/latest/resources.html#always-return-data)
+- [always_return_data = True](http://django-tastypie.readthedocs.org/en/latest/resources.html#always-return-data)
 
 ##Usage
 ```javascript
