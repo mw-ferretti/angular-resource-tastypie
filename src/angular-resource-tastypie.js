@@ -5,6 +5,9 @@
  */
 angular.module('ngResourceTastypie',['ngResource'])
 
+.config(function($resourceProvider) {
+    $resourceProvider.defaults.stripTrailingSlashes = false;
+})
 
 .provider('$tastypie', function($httpProvider) {
 
@@ -161,11 +164,11 @@ angular.module('ngResourceTastypie',['ngResource'])
         var custom_method = {
             'post':{method:'POST'},
             'save':{method:'POST'},
-            'get':{method:'GET', url:self.resource.endpoint+":id%2f"},
-            'get_uri':{method:'GET', url:self.resource.endpoint+":id%2f"},
-            'update':{method:'PUT', url:self.resource.endpoint+":id%2f"},
-            'delete':{method:'DELETE', url:self.resource.endpoint+":id%2f"},
-            'remove':{method:'DELETE', url:self.resource.endpoint+":id%2f"}            
+            'get':{method:'GET', url:self.resource.endpoint+":id/"},
+            'get_uri':{method:'GET', url:self.resource.endpoint+":id/"},
+            'update':{method:'PUT', url:self.resource.endpoint+":id/"},
+            'delete':{method:'DELETE', url:self.resource.endpoint+":id/"},
+            'remove':{method:'DELETE', url:self.resource.endpoint+":id/"}            
         };
 
         var obj = $resource(self.resource.endpoint, {id:'@id'}, custom_method);
@@ -280,7 +283,7 @@ angular.module('ngResourceTastypie',['ngResource'])
 
             if (!service) throw 'unknown service name';
 
-            this.endpoint = $tastypie.resource_url+service+'%2f';
+            this.endpoint = $tastypie.resource_url+service+'/';
             this.defaults = default_filters || {};
             this.page = {};
             this.objects = new $tastypieObjects(this);
