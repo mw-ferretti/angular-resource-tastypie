@@ -8,7 +8,7 @@ EX:
 2. source env/bin/active
 ```
 
-THEN:
+- THEN:
 1. cd backend/
 2. pip install -r requirements.txt
 3. cd myproject
