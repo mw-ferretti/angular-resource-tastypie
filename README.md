@@ -230,10 +230,11 @@ $scope.Song.objects.$find({rank__lte:10}).then(
 );
 
 /*
-The "$tastypiePaginator" and "$tastypieObjects"
+1. The "$tastypiePaginator" and "$tastypieObjects"
 will keep your object "$scope.Song.page" updated. 
 So, do the bind your "view" with "$scope.Song.page" object.
-Each item of "$scope.Song.page.objects" is an "$tastypieObjects" object. ;)
+
+2. Each item of "$scope.Song.page.objects" is an "$tastypieObjects" object. ;)
 */
 
 //Attributes:
