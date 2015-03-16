@@ -1,6 +1,5 @@
 #Instructions
 
-##Backend:
 ```
 IMPORT - USE PYTHON3
 EX:
@@ -8,7 +7,7 @@ EX:
 2. source env/bin/active
 ```
 
-- THEN:
+##Backend:
 1. cd backend/
 2. pip install -r requirements.txt
 3. cd myproject
