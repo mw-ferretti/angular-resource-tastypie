@@ -22,7 +22,7 @@
 - And more ...
 
 ##Requirements
-- Frontend: [AngularJs](https://angularjs.org/).
+- Frontend: [AngularJs 1.3+](https://angularjs.org/) 
 - Backend:  [Django-Tastypie](https://django-tastypie.readthedocs.org/en/latest/) or equivalent schema.
 
 <h5>Note</h5>

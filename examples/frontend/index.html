@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <title>Simple View</title>
-    <script src="lib/angular-1.2.16/angular.min.js"></script>
-    <script src="lib/angular-1.2.16/angular-resource.min.js"></script>
+    <script src="lib/angular-1.3.14/angular.min.js"></script>
+    <script src="lib/angular-1.3.14/angular-resource.min.js"></script>
     <script src="lib/angular-resource-tastypie.min.js"></script>
     <script src="controller.js"></script>
     
@@ -49,7 +49,7 @@
         <h3>Pagination control server-side</h3>
         <input type="button" ng-click="Song.page.first()" ng-disabled="!Song.page.meta.previous" value="First">
         <input type="button" ng-click="Song.page.previous()" ng-disabled="!Song.page.meta.previous" value="Previous">
-        <b ng-show="Song.page.len">{{Song.page.index}}/{{Song.page.len}}</b>
+        <b ng-show="Song.page.length">{{Song.page.index}}/{{Song.page.length}}</b>
         <input type="button" ng-click="Song.page.next()" ng-disabled="!Song.page.meta.next" value="Next">
         <input type="button" ng-click="Song.page.last()" ng-disabled="!Song.page.meta.next" value="Last">
     </div>

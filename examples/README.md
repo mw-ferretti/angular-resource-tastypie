@@ -1,6 +1,14 @@
 #Instructions
 
 ##Backend:
+'''
+IMPORT - USE PYTHON3
+EX:
+1. virtualenv env --no-site-packages --python=/usr/bin/python3
+2. source env/bin/active
+'''
+
+THEN:
 1. cd backend/
 2. pip install -r requirements.txt
 3. cd myproject
