@@ -87,8 +87,7 @@ http://django-tastypie.readthedocs.org/en/latest/authentication.html
 }]);
 ```
 
-
-## Making queries
+##Making queries
 The $tastypieResource class is responsible by connect on the specific "list endpoint".
 
 <h5>Consider the following example:</h5>
