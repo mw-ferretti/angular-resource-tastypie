@@ -232,6 +232,7 @@ $scope.Song.objects.$find({rank__lte:10}).then(
 /*
 The "$tastypiePaginator" and "$tastypieObjects" will keep your object "$scope.Song.page" updated. 
 So, do the bind your "view" with "$scope.Song.page" object.
+Each item of "$scope.Song.page.objects" is an "$tastypieObjects" object. ;)
 */
 
 //Attributes:
@@ -242,7 +243,7 @@ $scope.Song.page.meta.offset;
 $scope.Song.page.meta.total_count;  
 $scope.Song.page.objects;           // objects list of current page
 $scope.Song.page.index;             // current number page
-$scope.Song.page.len;               // pages quantity
+$scope.Song.page.length;               // pages quantity
 $scope.Song.page.range;             // numbers list of pages
         
 //Methods:
