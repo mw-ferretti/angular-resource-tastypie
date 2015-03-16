@@ -104,63 +104,9 @@ $scope.Song = new $tastypieResource('song',{limit:5});
 
 ```
 
-- <h5>Retrieving objects</h5>
-All the returned objects (from list_endpoint) have a paging control server-side.
-```javascript
-
-//all objects
-$scope.Song.objects.$find();
-
-//or with filters
-$scope.Song.objects.$find({rank__lte:10});
-
-//or with callback
-$scope.Song.objects.$find({rank__lte:10}).then(
-    function(result){
-        console.log(result);
-    },
-    function(error){
-        console.log(error);
-    }
-);
-
-/*
-Paging Control Server-Side
-
-Attributes:
-$scope.Song.endpoint;
-$scope.Song.page.meta.previous;
-$scope.Song.page.meta.next;
-$scope.Song.page.meta.limit;        
-$scope.Song.page.meta.offset;
-$scope.Song.page.meta.total_count;  
-$scope.Song.page.objects;           // objects list of current page
-$scope.Song.page.index;             // current number page
-$scope.Song.page.len;               // pages quantity
-$scope.Song.page.range;             // numbers list of pages
-        
-Methods:
-$scope.Song.page.change(index);
-$scope.Song.page.next();
-$scope.Song.page.previous();
-$scope.Song.page.refresh();
-$scope.Song.page.first();
-$scope.Song.page.last();
-*/
-
-//or from resource_uri
-//In this case, there is no paging. An "$tastypieObjects" (has CRUD) is returned.
-$scope.Song.objects.$get({id:100}).then(
-    function(result){
-        console.log(result);
-    },
-    function(error){
-        console.log(error);
-    }
-);
-```
-
 - <h5>Creating objects</h5>
+The $tastypieObjects class is responsible for providing the "crud" methods.
+
 ```javascript
 var song = $scope.Song.objects.$create();
 song.rank = 1
@@ -251,6 +197,64 @@ song.$delete()
 //or from resource_uri
 $scope.Song.objects.$delete({id:100});
 
+```
+
+- <h5>Retrieving objects</h5>
+The $tastypiePaginator class is responsible for providing the "paging control" methods, and the objects list.
+
+```javascript
+
+//all objects
+$scope.Song.objects.$find();
+
+//or with filters
+$scope.Song.objects.$find({rank__lte:10});
+
+//or with callback
+$scope.Song.objects.$find({rank__lte:10}).then(
+    function(result){
+        console.log(result); //The "result" is a "$tastypiePaginator" object.
+    },
+    function(error){
+        console.log(error);
+    }
+);
+
+/*
+The "$tastypiePaginator" and "$tastypieObjects" will keep your object "$scope.Song.page" updated. 
+So, do the bind your "view" with "$scope.Song.page" object.
+*/
+
+//Attributes:
+$scope.Song.page.meta.previous;
+$scope.Song.page.meta.next;
+$scope.Song.page.meta.limit;        
+$scope.Song.page.meta.offset;
+$scope.Song.page.meta.total_count;  
+$scope.Song.page.objects;           // objects list of current page
+$scope.Song.page.index;             // current number page
+$scope.Song.page.len;               // pages quantity
+$scope.Song.page.range;             // numbers list of pages
+        
+//Methods:
+$scope.Song.page.change(index);
+$scope.Song.page.next();
+$scope.Song.page.previous();
+$scope.Song.page.refresh();
+$scope.Song.page.first();
+$scope.Song.page.last();
+
+
+//get object from resource_uri
+//In this case, there is no paging. An "$tastypieObjects" is returned.
+$scope.Song.objects.$get({id:100}).then(
+    function(result){
+        console.log(result);
+    },
+    function(error){
+        console.log(error);
+    }
+);
 ```
 
 ##Class Diagram
