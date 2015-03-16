@@ -108,11 +108,11 @@ $scope.Song = new $tastypieResource('song',{limit:5});
 The $tastypieObjects class is responsible for providing the "crud" methods.
 
 ```javascript
-var song = $scope.Song.objects.$create();
-song.rank = 1
-song.song = "Sweet Emotion"
-song.artist = "Aerosmith"
-song.$save();
+$scope.song = $scope.Song.objects.$create();
+$scope.song.rank = 1
+$scope.song.song = "Sweet Emotion"
+$scope.song.artist = "Aerosmith"
+$scope.song.$save();
 
 //or
 $scope.Song.objects.$create({
@@ -142,33 +142,13 @@ After save, your obj is updated. Example, now your obj has an "id".. wow!!
 
 - <h5>Updating objects</h5>
 ```javascript
-//creating
-var song = $scope.Song.objects.$create();
-song.rank = 1
-song.song = "Sweet Emotion"
-song.artist = "Aerosmith"
-song.$save();
 
-//updating
-song.rank = 2
-song.$save()
-
-//or from get
-//An "$tastypieObjects" (has CRUD) is returned.
-$scope.Song.objects.$get({id:100}).then(
-    function(result){
-        result.rank += 1;
-        result.$save();
-    }
-);
-
-//or from resource_uri
 $scope.Song.objects.$update({
     id:100,
     song:'Sweet Emotion ...'
 });
 
-//or from resource_uri with callback
+//or with callback
 $scope.Song.objects.$update({
     id:100,
     song:'Sweet Emotion'
@@ -180,10 +160,43 @@ $scope.Song.objects.$update({
         console.log(error);
     }
 );
+
+//or from get
+$scope.Song.objects.$get({id:100}).then(
+    function(result){
+        result.rank += 1;
+        result.$save();
+    }
+);
+
+//or from local object 
+//creating
+var song = $scope.Song.objects.$create();
+song.rank = 1;
+song.song = "Sweet Emotion";
+song.artist = "Aerosmith";
+song.$save();
+
+//updating
+song.rank = 2
+song.$save();
 ```
 
 - <h5>Deleting objects</h5>
 ```javascript
+$scope.Song.objects.$delete({id:100});
+
+//or with callback
+$scope.Song.objects.$delete({id:100}).then(
+    function(result){
+        console.log(result);
+    },
+    function(error){
+        console.log(error);
+    }
+);
+
+//or from local object 
 //creating
 var song = $scope.Song.objects.$create();
 song.rank = 1
@@ -193,10 +206,6 @@ song.$save();
 
 //deleting
 song.$delete()
-
-//or from resource_uri
-$scope.Song.objects.$delete({id:100});
-
 ```
 
 - <h5>Retrieving objects</h5>
