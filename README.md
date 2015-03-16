@@ -230,25 +230,25 @@ $scope.Song.objects.$find({rank__lte:10}).then(
 );
 
 /*
-1. The "$tastypiePaginator" and "$tastypieObjects"
-will keep your "$scope.Song.page" object updated. 
-So, do the bind your "view" with "$scope.Song.page" object.
+NOTE
+
+1. After you run the first time the "$find" method, you have inside your instance "$tastypieResource" ($scope.Song), an "$tastypiePaginator" object ($scope.Song.page).
 
 2. Each item of "$scope.Song.page.objects" is an "$tastypieObjects" object. ;)
 */
 
-//Attributes:
+//All page attributes:
 $scope.Song.page.meta.previous;
 $scope.Song.page.meta.next;
 $scope.Song.page.meta.limit;        
 $scope.Song.page.meta.offset;
 $scope.Song.page.meta.total_count;  
-$scope.Song.page.objects;           // objects list of current page
+$scope.Song.page.objects;           // objects ($tastypieObjects) list of current page
 $scope.Song.page.index;             // current number page
-$scope.Song.page.length;               // pages quantity
+$scope.Song.page.length;            // pages quantity
 $scope.Song.page.range;             // numbers list of pages
         
-//Methods:
+//All page methods:
 $scope.Song.page.change(index);
 $scope.Song.page.next();
 $scope.Song.page.previous();
