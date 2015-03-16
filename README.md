@@ -80,9 +80,15 @@ http://django-tastypie.readthedocs.org/en/latest/authentication.html
 </p>
 </blockquote>
 
-## $tastypieResource
-This class is responsible by connect on the specific "list endpoint".
-This is where all magic happens.
+```javascript
+//Access $tastypieProvider in the controller
+.controller('MyCtrl', ['$scope', '$tastypieResource', '$tastypie', function($scope, $tastypieResource, $tastypie){
+    $tastypie.setAuth('username','api_key');
+}]);
+```
+
+## Making queries
+The $tastypieResource class is responsible by connect on the specific "list endpoint".
 
 <h5>Consider the following example:</h5>
 We have a service called "song", responsible for providing the "TOP 100 SONGS CLASSIC ROCK":
