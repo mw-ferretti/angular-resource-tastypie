@@ -252,9 +252,8 @@ $scope.Song.objects.$find({rank__lte:10}).then(
 );
 ```
 <blockquote>
+<h5>NOTE</h5>
 <p>
-NOTE
-
 1. After you run the first time the "$find" method, you have inside your instance "$tastypieResource" ($scope.Song), an "$tastypiePaginator" object ($scope.Song.page).
 
 2. Each item of "$scope.Song.page.objects" is an "$tastypieObjects" object. ;)
