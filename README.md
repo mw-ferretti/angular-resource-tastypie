@@ -282,6 +282,16 @@ $scope.Song.page.previous();
 $scope.Song.page.refresh();
 $scope.Song.page.first();
 $scope.Song.page.last();
+
+//All methods has promise. EX:
+$scope.Song.page.next().then(
+    function(result){
+        console.log(result); //The "result" is a "$tastypiePaginator" object.
+    },
+    function(error){
+        console.log(error);
+    }
+);
 ```
 
 ```javascript
