@@ -265,15 +265,15 @@ $scope.Song.objects.$find({rank__lte:10}).then(
 
 ```javascript
 //All page attributes:
-$scope.Song.page.meta.previous;
-$scope.Song.page.meta.next;
-$scope.Song.page.meta.limit;        
-$scope.Song.page.meta.offset;
-$scope.Song.page.meta.total_count;  
-$scope.Song.page.objects;           // objects ($tastypieObjects) list of current page
-$scope.Song.page.index;             // current number page
-$scope.Song.page.length;            // pages quantity
-$scope.Song.page.range;             // numbers list of pages
+$scope.Song.page.meta.previous;     // URL of previous page
+$scope.Song.page.meta.next;         // URL of next page
+$scope.Song.page.meta.limit;        // Current limit of records by page
+$scope.Song.page.meta.offset;       // Current displacement records
+$scope.Song.page.meta.total_count;  // Total count of found records.
+$scope.Song.page.objects;           // Objects ($tastypieObjects) list of current page
+$scope.Song.page.index;             // Current number page
+$scope.Song.page.length;            // Pages quantity
+$scope.Song.page.range;             // Numbers list of pages
         
 //All page methods:
 $scope.Song.page.change(index);
