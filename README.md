@@ -105,6 +105,7 @@ $scope.Song = new $tastypieResource('song',{limit:5});
 ```
 
 - <h5>Creating objects</h5>
+The "$create()" method will return an "$tastypieObjects" object.
 The $tastypieObjects class is responsible for providing the "crud" methods.
 
 ```javascript
@@ -228,6 +229,7 @@ song.$delete()
 ```
 
 - <h5>Retrieving objects</h5>
+The "$find()" method will return an "$tastypiePaginator" object.
 The $tastypiePaginator class is responsible for providing the "paging control" methods, and the objects list.
 
 ```javascript
