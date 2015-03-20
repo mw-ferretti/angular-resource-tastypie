@@ -267,7 +267,7 @@ $scope.Song.objects.$find({rank__lte:10}).then(
 //All page attributes:
 $scope.Song.page.meta.previous;     // URL of previous page
 $scope.Song.page.meta.next;         // URL of next page
-$scope.Song.page.meta.limit;        // Current limit of records by page
+$scope.Song.page.meta.limit;        // Limit of records by page
 $scope.Song.page.meta.offset;       // Current displacement records
 $scope.Song.page.meta.total_count;  // Total count of found records.
 $scope.Song.page.objects;           // Objects ($tastypieObjects) list of current page
