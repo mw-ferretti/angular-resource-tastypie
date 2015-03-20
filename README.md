@@ -113,14 +113,18 @@ $scope.song.rank = 1
 $scope.song.song = "Sweet Emotion"
 $scope.song.artist = "Aerosmith"
 $scope.song.$save();
+```
 
+```javascript
 //or
 $scope.Song.objects.$create({
     rank: 1,
     song: "Sweet Emotion",
     artist: "Aerosmith"
 }).$save();
+```
 
+```javascript
 //or with callback
 $scope.Song.objects.$create({
     rank: 1,
@@ -134,20 +138,25 @@ $scope.Song.objects.$create({
         console.log(error);
     }
 );
-
-/*
-After save, your obj is updated. Example, now your obj has an "id".. wow!!
-*/
 ```
 
-- <h5>Updating objects</h5>
-```javascript
+<blockquote>
+<p>
+After save, your obj is updated. Example, now your obj has an "id".. wow!!
+</p>
+</blockquote>
 
+
+- <h5>Updating objects</h5>
+
+```javascript
 $scope.Song.objects.$update({
     id:100,
     song:'Sweet Emotion ...'
 });
+```
 
+```javascript
 //or with callback
 $scope.Song.objects.$update({
     id:100,
@@ -160,7 +169,9 @@ $scope.Song.objects.$update({
         console.log(error);
     }
 );
+```
 
+```javascript
 //or from get
 $scope.Song.objects.$get({id:100}).then(
     function(result){
@@ -168,7 +179,9 @@ $scope.Song.objects.$get({id:100}).then(
         result.$save();
     }
 );
+```
 
+```javascript
 //or from local object 
 //creating
 var song = $scope.Song.objects.$create();
@@ -182,10 +195,14 @@ song.rank = 2
 song.$save();
 ```
 
+
 - <h5>Deleting objects</h5>
+
 ```javascript
 $scope.Song.objects.$delete({id:100});
+```
 
+```javascript
 //or with callback
 $scope.Song.objects.$delete({id:100}).then(
     function(result){
@@ -195,7 +212,9 @@ $scope.Song.objects.$delete({id:100}).then(
         console.log(error);
     }
 );
+```
 
+```javascript
 //or from local object 
 //creating
 var song = $scope.Song.objects.$create();
@@ -212,13 +231,16 @@ song.$delete()
 The $tastypiePaginator class is responsible for providing the "paging control" methods, and the objects list.
 
 ```javascript
-
 //all objects
 $scope.Song.objects.$find();
+```
 
+```javascript
 //or with filters
 $scope.Song.objects.$find({rank__lte:10});
+```
 
+```javascript
 //or with callback
 $scope.Song.objects.$find({rank__lte:10}).then(
     function(result){
@@ -228,15 +250,18 @@ $scope.Song.objects.$find({rank__lte:10}).then(
         console.log(error);
     }
 );
-
-/*
+```
+<blockquote>
+<p>
 NOTE
 
 1. After you run the first time the "$find" method, you have inside your instance "$tastypieResource" ($scope.Song), an "$tastypiePaginator" object ($scope.Song.page).
 
 2. Each item of "$scope.Song.page.objects" is an "$tastypieObjects" object. ;)
-*/
+</p>
+</blockquote>
 
+```javascript
 //All page attributes:
 $scope.Song.page.meta.previous;
 $scope.Song.page.meta.next;
@@ -255,8 +280,9 @@ $scope.Song.page.previous();
 $scope.Song.page.refresh();
 $scope.Song.page.first();
 $scope.Song.page.last();
+```
 
-
+```javascript
 //get object from resource_uri
 //In this case, there is no paging. An "$tastypieObjects" is returned.
 $scope.Song.objects.$get({id:100}).then(
