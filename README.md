@@ -72,9 +72,9 @@ $tastypieProvider.setAuth('username','api_key');
 ```
 <blockquote>
 <p>
-This api_key was fixed only for demonstration. 
-You must generate a dynamic api_key after the user login, on backend authorization system, and then configure this attribute. 
-With django-tastypie this task is quite simple: 
+This api_key was fixed only for demonstration.<br>
+You must generate a dynamic api_key after the user login, on backend authorization system, and then configure this attribute.<br>
+With django-tastypie this task is quite simple:<br>
 http://django-tastypie.readthedocs.org/en/latest/authentication.html
 </p>
 </blockquote>
