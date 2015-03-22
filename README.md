@@ -81,7 +81,7 @@ http://django-tastypie.readthedocs.org/en/latest/authentication.html
 
 ```javascript
 //Access $tastypieProvider in the controller
-.controller('MyCtrl', ['$scope', '$tastypieResource', '$tastypie', function($scope, $tastypieResource, $tastypie){
+.controller('MyCtrlAuth', ['$scope', '$tastypie', function($scope, $tastypie){
     $tastypie.setAuth('username','api_key');
 }]);
 ```
