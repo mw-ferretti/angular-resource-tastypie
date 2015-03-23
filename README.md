@@ -17,6 +17,7 @@
 <h5>BENEFITS:</h5>
 - Async development between frontend and backend developers.
 - Reuse of web developers team to create mobile applications.
+- The frontend this isolated, we can distribute it as app using [Apache Cordova](https://cordova.apache.org/).
 - Complete separation between business rules and usability rules of user interface. 
 - Business rules are the same for different types of UI. We can create different UI with any other programming language, passing through the same business rules on the backend.
 - And more ...
