@@ -6,6 +6,9 @@
 angular.module('ngResourceTastypie',['ngResource'])
 
 .config(function($resourceProvider){
+    if($resourceProvider.defaults == undefined){
+        $resourceProvider.defaults = {};
+    }
     $resourceProvider.defaults.stripTrailingSlashes = false;
 })
 
