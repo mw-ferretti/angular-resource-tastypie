@@ -11,5 +11,5 @@ angular.module('myApp', ['ngResourceTastypie'])
     $scope.Song.objects.$find();    
     
     $scope.song = $scope.Song.objects.$create();
-
+    
 }]);

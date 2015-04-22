@@ -1,4 +1,4 @@
-#angular-resource-tastypie
+#Angular Resource Tastypie
 [RESTful](http://www.ibm.com/developerworks/library/ws-restful/) AngularJs client for [Django-Tastypie](https://django-tastypie.readthedocs.org/en/latest/) or equivalent schema.
 
 <h5>Features:</h5>
@@ -27,9 +27,13 @@
 - Backend:  [Django-Tastypie](https://django-tastypie.readthedocs.org/en/latest/) or equivalent schema.
 
 <h5>Note</h5>
-It is necessary to always return data, in django-tastypie enable this option:
-- [always_return_data = True](http://django-tastypie.readthedocs.org/en/latest/resources.html#always-return-data)
+Backend:
+- [django-cors-headers](https://github.com/ottoyiu/django-cors-headers)
+- [always_return_data](http://django-tastypie.readthedocs.org/en/latest/resources.html#always-return-data)
+```
+[See how to use.](https://github.com/mw-ferretti/angular-resource-tastypie/tree/master/examples/backend)
 
+```
 ##Usage
 ```javascript
 angular.module('myApp', ['ngResourceTastypie'])
@@ -82,8 +86,17 @@ http://django-tastypie.readthedocs.org/en/latest/authentication.html
 
 ```javascript
 //Access $tastypieProvider in the controller
-.controller('MyCtrlAuth', ['$scope', '$tastypie', function($scope, $tastypie){
-    $tastypie.setAuth('username','api_key');
+//Login sample:
+.controller('LoginCtrl', ['$scope', '$tastypie', '$http', function($scope, $tastypie, $http){
+    $scope.login = function(){
+        var data = {
+            userName: $scope.userName,
+            password: $scope.password
+        }
+        $http.post('/loginUrl', data).success(response){
+            $tastypie.setAuth(response.username, response.api_key);
+        }
+    }
 }]);
 ```
 

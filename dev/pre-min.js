@@ -1,8 +1,34 @@
 /**
  * @license Angular Resource Tastypie v1.0.0
- * (c) 2014-2015 Marcos William Ferretti, http://br.linkedin.com/in/mwferretti/
+ * (c) 2014-2015 Marcos William Ferretti, https://github.com/mw-ferretti/angular-resource-tastypie
  * License: MIT
  */
+
+var ngResourceTastypie = {
+    name: 'Angular Resource Tastypie',
+    description: 'RESTful AngularJs client for Django-Tastypie or equivalent schema.',
+    version: {
+        full: '1.0.0', 
+        major: 1, 
+        minor: 0, 
+        dot: 0, 
+        codeName: 'Alpha'
+    },
+    author: {
+        name: 'Marcos William Ferretti',
+        email: 'ferretti.spo@gmail.com',
+        github: 'https://github.com/mw-ferretti/',
+        linkedin: 'https://www.linkedin.com/in/mwferretti'
+    },
+    license: 'MIT, (c) 2014-2015 Marcos William Ferretti',
+    source: 'https://github.com/mw-ferretti/angular-resource-tastypie'
+};
+
+if(typeof angular == 'undefined')
+    throw '[ngResourceTastypie v'.concat(ngResourceTastypie.version.full,'] Requires AngularJs 1.3+');
+
+if(angular.version.major < 1 || (angular.version.major == 1 && angular.version.minor < 3))
+    throw '[ngResourceTastypie v'.concat(ngResourceTastypie.version.full,'] Requires AngularJs 1.3+, your version is ', angular.version.full);
 
 function TastypieConfig($resourceProvider){
     $resourceProvider.defaults.stripTrailingSlashes = false;
@@ -61,6 +87,7 @@ function TastypieProvider($httpProvider) {
 }
 
 function TastypiePaginatorFactory($resource, $tastypie, $q){
+
     function $tastypiePaginator(tastypieResource, filters, result){
 
         this.resource = tastypieResource;
@@ -160,7 +187,7 @@ function TastypiePaginatorFactory($resource, $tastypie, $q){
 
     $tastypiePaginator.prototype.next = function(){
         if (this.meta.next) 
-            return getPage(this, $tastypie.resource_domain+this.meta.next);
+            return getPage(this, $tastypie.resource_domain.concat(this.meta.next));
         else{
             var msg = '[$tastypiePaginator][next] '.concat('Not exist next pages.');
             return promise_except_data_invalid(msg);
@@ -169,7 +196,7 @@ function TastypiePaginatorFactory($resource, $tastypie, $q){
 
     $tastypiePaginator.prototype.previous = function(){
         if (this.meta.previous) 
-            return getPage(this, $tastypie.resource_domain+this.meta.previous);
+            return getPage(this, $tastypie.resource_domain.concat(this.meta.previous));
         else{
             var msg = '[$tastypiePaginator][previous] '.concat('Not exist previous pages.');
             return promise_except_data_invalid(msg);
@@ -192,7 +219,6 @@ function TastypiePaginatorFactory($resource, $tastypie, $q){
 }
 
 function TastypieObjectsFactory($resource, $tastypiePaginator, $q){
-
     function $tastypieObjects(tastypieResource){
         this.resource = tastypieResource;
     }
@@ -369,7 +395,6 @@ function TastypieObjectsFactory($resource, $tastypiePaginator, $q){
 }
 
 function TastypieResourceFactory($resource, $tastypie, $tastypiePaginator, $tastypieObjects){
-
         function $tastypieResource(service, default_filters) {
 
             if (!service) throw '[$tastypieResource] Unknown service name.';
@@ -384,6 +409,7 @@ function TastypieResourceFactory($resource, $tastypie, $tastypiePaginator, $tast
 }
 
 var ResourceTastypieModule = angular.module('ngResourceTastypie', ['ngResource']);
+ResourceTastypieModule.constant('ngResourceTastypie', ngResourceTastypie);
 
 TastypieConfig.$inject = ['$resourceProvider'];
 ResourceTastypieModule.config(TastypieConfig);
