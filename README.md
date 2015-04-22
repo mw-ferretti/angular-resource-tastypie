@@ -30,9 +30,8 @@
 Requirements for the backend:
 - [django-cors-headers](https://github.com/ottoyiu/django-cors-headers)
 - [always_return_data](http://django-tastypie.readthedocs.org/en/latest/resources.html#always-return-data)
-<p>
+
 [See how to use.](https://github.com/mw-ferretti/angular-resource-tastypie/tree/master/examples/backend)
-</p>
 
 ##Usage
 ```javascript
