@@ -100,15 +100,31 @@
         $scope.Song = new $tastypieResource('song', {limit:5});
     </p>
     Have a good time!<br><br>
-    <a href="http://opensource.org/"><img src="lib/osi_logo_100X133_90ppi.png"></a>
-    <a href="http://br.linkedin.com/in/mwferretti">
-            <img 
-                 src="https://static.licdn.com/scds/common/u/img/webpromo/btn_viewmy_160x33_pt_BR.png?locale=" 
-                 width="160" 
-                 height="33" 
-                 border="0" 
-                 alt="View Marcos W. Ferretti profile on LinkedIn"
-            >
-    </a>
+    <table border="0">
+        <tr>
+            <td><a href="http://opensource.org/"><img src="lib/osi_logo_100X133_90ppi.png"></a></td>
+            <td>
+                <a href="http://br.linkedin.com/in/mwferretti">
+                        <img 
+                             src="https://static.licdn.com/scds/common/u/img/webpromo/btn_viewmy_160x33_pt_BR.png?locale=" 
+                             width="160" 
+                             height="33" 
+                             border="0" 
+                             alt="View Marcos W. Ferretti profile on LinkedIn"
+                        >
+                </a>
+            </td>
+            <td>
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="RGQ8NSYPA59FL">
+                    <input type="image" 
+                           src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" 
+                           border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                    <img alt="" border="0" src="https://www.paypalobjects.com/pt_BR/i/scr/pixel.gif" width="1" height="1">
+                </form>
+            </td>
+        </tr>
+    </table>
 </body>
 </html>
