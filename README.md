@@ -322,5 +322,8 @@ $scope.Song.objects.$get({id:100}).then(
 ##Class Diagram
 ![Class Diagram](/dev/ClassDiagram.png)
 
+##Contribute
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RGQ8NSYPA59FL)
+
 ##License
 angular-resource-tastypie is released under the [MIT License](https://github.com/mw-ferretti/angular-resource-tastypie/blob/master/LICENSE).
