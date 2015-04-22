@@ -321,3 +321,6 @@ $scope.Song.objects.$get({id:100}).then(
 
 ##Class Diagram
 ![Class Diagram](/dev/ClassDiagram.png)
+
+##License
+angular-resource-tastypie is released under the [MIT License](https://github.com/mw-ferretti/angular-resource-tastypie/blob/master/LICENSE).
