@@ -2,9 +2,9 @@
 [RESTful](http://www.ibm.com/developerworks/library/ws-restful/) AngularJs client for [Django-Tastypie](https://django-tastypie.readthedocs.org/en/latest/) or equivalent schema.
 
 <h5>Features:</h5>
-1. Paging system
+1. Pagination
 2. Complete CRUD
-3. Abstract AJAX(J) providing operation similar to the [Django Model API](https://docs.djangoproject.com/en/dev/topics/db/queries/)
+3. Abstract AJAX(J) providing operations which are similar to the [Django Model API](https://docs.djangoproject.com/en/dev/topics/db/queries/)
 
 ##Context
 [RESTful](http://www.ibm.com/developerworks/library/ws-restful/) architecture with [AngularJs](https://angularjs.org/) and [Django](https://www.djangoproject.com/).
@@ -15,11 +15,11 @@
 - Frontend controllers: User Interface rules, only!
 
 <h5>BENEFITS:</h5>
-- Async development between frontend and backend developers.
+- Asynchronous development between frontend and backend developers.
 - Reuse of web developers team to create mobile applications.
-- The frontend this isolated, we can distribute it as app using [Apache Cordova](https://cordova.apache.org/).
-- Complete separation between business rules and usability rules of user interface. 
-- Business rules are the same for different types of UI. We can create different UI with any other programming language, passing through the same business rules on the backend.
+- The frontend is isolated, we can distribute it as an application by using [Apache Cordova](https://cordova.apache.org/).
+- Independent layers between business rules and usability rules of user interface. 
+- Business rules are the same for different types of UI. We can create different UIs with any other programming language, passing through the same business rules on the backend.
 - And more ...
 
 ##Requirements
@@ -76,7 +76,7 @@ $tastypieProvider.setAuth('username','api_key');
 ```
 <blockquote>
 <p>
-This api_key was fixed only for demonstration.<br>
+This api_key was fixed only for demo purposes.<br>
 You must generate a dynamic api_key after the user login, on backend authorization system, and then configure this attribute.<br>
 With django-tastypie this task is quite simple:<br>
 http://django-tastypie.readthedocs.org/en/latest/authentication.html
@@ -100,10 +100,10 @@ http://django-tastypie.readthedocs.org/en/latest/authentication.html
 ```
 
 ##Making queries
-The $tastypieResource class is responsible by connect on the specific "list endpoint".
+The $tastypieResource class is held responsible for connecting on the specific "list endpoint".
 
 <h5>Consider the following example:</h5>
-We have a service called "song", responsible for providing the "TOP 100 SONGS CLASSIC ROCK":
+We have a service called "song", which is responsible for providing the "TOP 100 SONGS CLASSIC ROCK":
 ```
 http://127.0.0.1:8001/api/v1/song/
 ```
@@ -117,8 +117,8 @@ $scope.Song = new $tastypieResource('song',{limit:5});
 ```
 
 - <h5>Creating objects</h5>
-The "$create()" method will return an "$tastypieObjects" object.<br>
-The $tastypieObjects class is responsible for providing the "crud" methods.
+The "$create()" method will return a "$tastypieObjects" object.<br>
+The $tastypieObjects class is held responsible for providing the "(C)reate, (R)read, (U)pdate, (D)elete" methods.
 
 ```javascript
 $scope.song = $scope.Song.objects.$create();
@@ -155,7 +155,7 @@ $scope.Song.objects.$create({
 
 <blockquote>
 <p>
-After save, your obj is updated. Example, now your obj has an "id".. wow!!
+After saving, your obj will be updated. For example, your obj now has an "id".. wow!!
 </p>
 </blockquote>
 
@@ -241,8 +241,8 @@ song.$delete()
 ```
 
 - <h5>Retrieving objects</h5>
-The "$find()" method will return an "$tastypiePaginator" object.<br>
-The $tastypiePaginator class is responsible for providing the "paging control" methods, and the objects list.
+The "$find()" method will return a "$tastypiePaginator" object.<br>
+The $tastypiePaginator class is responsible for providing the "pagination control" methods, and the objects list.
 
 ```javascript
 //all objects
@@ -268,10 +268,10 @@ $scope.Song.objects.$find({rank__lte:10}).then(
 <blockquote>
 <h5>NOTE</h5>
 <p>
-1. After you run the first time the "$find" method, you have inside your instance "$tastypieResource" ($scope.Song), an "$tastypiePaginator" object ($scope.Song.page).
+1. After running the "$find" method for the first time, you have inside your instance "$tastypieResource" ($scope.Song), a "$tastypiePaginator" object ($scope.Song.page).
 </p>
 <p>
-2. Each item of "$scope.Song.page.objects" is an "$tastypieObjects" object. ;)
+2. For each item of "$scope.Song.page.objects" you retrieve a "$tastypieObjects" object. ;)
 </p>
 </blockquote>
 
@@ -323,6 +323,8 @@ $scope.Song.objects.$get({id:100}).then(
 ![Class Diagram](/dev/ClassDiagram.png)
 
 ##Contribute
+##Verificar aqui se você gostou para deixar algo mais amigável ;) 
+  If you found it useful, please consider paying me a coffee ;)
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RGQ8NSYPA59FL)
 
 ##License
