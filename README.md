@@ -11,15 +11,15 @@
 ![Architecture](/dev/arq_rest_angular_django.jpg)
 
 <h5>IMPORTANT:</h5>
-- Backend controllers: Security rules for data persistence and access.
-- Frontend controllers: User Interface rules, only!
+- Backend: Security rules for data persistence and access.
+- Frontend: [Usability](https://en.wikipedia.org/wiki/Usability) rules, only!
 
 <h5>BENEFITS:</h5>
 - Asynchronous development between frontend and backend developers.
 - Reuse of web developers team to create mobile applications.
 - The frontend is isolated, we can distribute it as an application by using [Apache Cordova](https://cordova.apache.org/).
 - Independent layers between business rules and usability rules of user interface. 
-- Business rules are the same for different types of UI. We can create different UIs with any other programming language, passing through the same business rules on the backend.
+- Business rules are the same for different types of [UI](https://en.wikipedia.org/wiki/User_interface). We can create different [UIs](https://en.wikipedia.org/wiki/User_interface) with any other programming language, passing through the same business rules on the backend.
 - And more ...
 
 ##Requirements
@@ -31,7 +31,7 @@ Requirements for the backend:
 - [django-cors-headers](https://github.com/ottoyiu/django-cors-headers)
 - [always_return_data](http://django-tastypie.readthedocs.org/en/latest/resources.html#always-return-data)
 
-[See how to use.](https://github.com/mw-ferretti/angular-resource-tastypie/tree/master/examples/backend)
+[See how to use.](https://github.com/mw-ferretti/angular-resource-tastypie/tree/master/examples)
 
 ##Usage
 ```javascript
