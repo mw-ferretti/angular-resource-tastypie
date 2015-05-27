@@ -5,11 +5,11 @@ angular.module('myApp', ['ngResourceTastypie'])
     $tastypieProvider.setAuth('admin','320c4e7da6ed93946f97f51e6f4c8354a098bb6e');
 })
 
-.controller('MyCtrl', ['$scope', '$tastypieResource', function($scope, $tastypieResource){
+.controller('MyCtrl', ['$scope', '$tastypieResource', '$tastypie', function($scope, $tastypieResource, $tastypie){
 
     $scope.Song = new $tastypieResource('song', {limit:5});
     $scope.Song.objects.$find();    
-    
+    $scope.Api = $tastypie;
     $scope.song = $scope.Song.objects.$create();
     
 }]);

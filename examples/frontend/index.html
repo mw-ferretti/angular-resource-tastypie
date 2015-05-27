@@ -17,7 +17,7 @@
     
 <body ng-controller="MyCtrl">
     
-    <h2><u>Angular Resource Tastypie</u></h2>
+    <h2><u>Angular Resource Tastypie</u><span ng-show="Api.working"> &nbsp; >>> Api working ...</span></h2>
     
     <div class="container group">
         <h3>Meta</h3>
@@ -72,7 +72,7 @@
     <div class="clear"> </div>
     
     <div id="objects" class="container">
-        <h3>Objects</h3>
+        <h3>Objects<span ng-show="Song.working"> &nbsp; >>> Service working ...</span></h3>
         <table border="0" ng-show="Song.page.objects.length">
             <thead>
                 <th>Id</th>

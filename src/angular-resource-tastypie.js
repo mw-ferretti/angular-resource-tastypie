@@ -50,7 +50,7 @@ angular.module('ngResourceTastypie', ['ngResource'])
     var auth = {
         username : '',
         api_key : ''
-    };  
+    };
 
     this.setResourceUrl = function(url){
         resource_url = url;
@@ -79,12 +79,27 @@ angular.module('ngResourceTastypie', ['ngResource'])
     this.getResourceDomain = function(){
         return resource_domain;
     };
-
+    
+    var working_list = [];
+    Object.defineProperties(this, {
+        "working": {
+            "get": function(){
+                return (working_list.length > 0);
+            },
+            "set": function(b){
+                if(typeof(b) == 'undefined') b = false;
+                if(b) working_list.push(1);
+                else working_list.splice(-1,1);
+            }
+        }
+    });
+    
     this.$get = function(){
         return {
             resource_url:this.getResourceUrl(),
             resource_domain:this.getResourceDomain(),
             auth:this.getAuth(),
+            working:this.working,
             setAuth:this.setAuth, 
             setResourceUrl:this.setResourceUrl
         }
@@ -135,14 +150,17 @@ angular.module('ngResourceTastypie', ['ngResource'])
     
     function getPage(self, end_url){
         if (end_url){
+            self.resource.working = true;
             var promise = $resource(end_url).get().$promise.then(
                 function(result){
                     setPage(self, result);
+                    self.resource.working = false;
                     return self;
                 },
                 function(error){
                     error = error || {};
                     error.statusText = '[$tastypiePaginator][$get] '.concat(error.statusText || 'Server Not Responding.');
+                    self.resource.working = false;
                     throw error;
                 }
             );
@@ -155,7 +173,8 @@ angular.module('ngResourceTastypie', ['ngResource'])
 
     function changePage(self, index, update){
         if (((index != self.index) || (update)) && (index > 0) && (index <= self.length)){
-
+            
+            self.resource.working = true;
             var filters = angular.copy(self.filters);
             filters.offset = ((index-1)*self.meta.limit);
             
@@ -165,12 +184,14 @@ angular.module('ngResourceTastypie', ['ngResource'])
                         changePage(self, (index - 1), true);
                     else{
                         setPage(self, result);
+                        self.resource.working = false;
                         return self;
                     }
                 },
                 function(error){
                     error = error || {};
                     error.statusText = '[$tastypiePaginator][$get] '.concat(error.statusText || 'Server Not Responding.');
+                    self.resource.working = false;
                     throw error;
                 }
             );
@@ -263,13 +284,16 @@ angular.module('ngResourceTastypie', ['ngResource'])
                 return promise_except_data_invalid(msg);
             }
             
+            self.resource.working = true;
             var promise = fields.$get_uri().then(
                 function(result){
+                    self.resource.working = false;
                     return result;
                 },
                 function(error){
                     error = error || {};
                     error.statusText = '[$tastypieObjects][$get] '.concat(error.statusText || 'Server Not Responding.');
+                    self.resource.working = false;
                     throw error;
                 }
             );
@@ -281,8 +305,10 @@ angular.module('ngResourceTastypie', ['ngResource'])
             angular.extend(fields, (data || {}));
             var ws = fields.hasOwnProperty('id') ? fields.$put() : fields.$post();
             
+            self.resource.working = true;
             var promise = ws.then(
                 function(result){
+                    self.resource.working = false;
                     if (typeof(self.resource.page.refresh) == typeof(Function))
                         self.resource.page.refresh();
                     return result;
@@ -290,6 +316,7 @@ angular.module('ngResourceTastypie', ['ngResource'])
                 function(error){
                     error = error || {};
                     error.statusText = '[$tastypieObjects][$save] '.concat(error.statusText || 'Server Not Responding.');
+                    self.resource.working = false;
                     throw error;
                 }
             );        
@@ -305,8 +332,10 @@ angular.module('ngResourceTastypie', ['ngResource'])
                 return promise_except_data_invalid(msg);
             }
             
+            self.resource.working = true;
             var promise = fields.$patch().then(
                 function(result){
+                    self.resource.working = false;
                     if (typeof(self.resource.page.refresh) == typeof(Function))
                         self.resource.page.refresh();
                     return result;
@@ -314,6 +343,7 @@ angular.module('ngResourceTastypie', ['ngResource'])
                 function(error){
                     error = error || {};
                     error.statusText = '[$tastypieObjects][$update] '.concat(error.statusText || 'Server Not Responding.');
+                    self.resource.working = false;
                     throw error;
                 }
             );        
@@ -329,8 +359,10 @@ angular.module('ngResourceTastypie', ['ngResource'])
                 return promise_except_data_invalid(msg);
             }
             
+            self.resource.working = true;
             var promise = fields.$remove().then(
                 function(result){
+                    self.resource.working = false;
                     angular.forEach(fields, function(value, key){delete fields[key]});
                     if (typeof(self.resource.page.refresh) == typeof(Function))
                             self.resource.page.refresh();
@@ -339,6 +371,7 @@ angular.module('ngResourceTastypie', ['ngResource'])
                 function(error){
                     error = error || {};
                     error.statusText = '[$tastypieObjects][$delete] '.concat(error.statusText || 'Server Not Responding.');
+                    self.resource.working = false;
                     throw error;
                 }                                             
             );
@@ -361,14 +394,17 @@ angular.module('ngResourceTastypie', ['ngResource'])
         });
         
         obj.prototype.$find = function(filter){
+            self.resource.working = true;
             var promise = this.$get(filter).then(
                 function(result){
+                    self.resource.working = false;
                     self.resource.page = new $tastypiePaginator(self.resource, filter, result);                    
                     return self.resource.page;
                 },
                 function(error){
                     error = error || {};
                     error.statusText = '[$tastypieObjects][$find] '.concat(error.statusText || 'Server Not Responding.');
+                    self.resource.working = false;
                     throw error;
                 }
             );
@@ -401,7 +437,6 @@ angular.module('ngResourceTastypie', ['ngResource'])
     return $tastypieObjects;
 }])
 
-
 .factory('$tastypieResource', ['$resource', '$tastypie', '$tastypiePaginator', '$tastypieObjects', function($resource, $tastypie, $tastypiePaginator, $tastypieObjects){
 
         function $tastypieResource(service, default_filters) {
@@ -412,6 +447,21 @@ angular.module('ngResourceTastypie', ['ngResource'])
             this.defaults = default_filters || {};
             this.page = {};
             this.objects = new $tastypieObjects(this);
+            
+            var working_list = [];
+            Object.defineProperties(this, {
+                "working": {
+                    "get": function(){
+                        return (working_list.length > 0);
+                    },
+                    "set": function(b){
+                        if(typeof(b) == 'undefined') b = false;
+                        if(b) working_list.push(1);
+                        else working_list.splice(-1,1);
+                        $tastypie.working = b;
+                    }
+                }
+            });
         }
 
         return $tastypieResource;

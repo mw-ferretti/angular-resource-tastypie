@@ -118,7 +118,7 @@ $scope.Song = new $tastypieResource('song',{limit:5});
 
 - <h5>Creating objects</h5>
 The "$create()" method will return a "$tastypieObjects" object.<br>
-The $tastypieObjects class is held responsible for providing the "(C)reate, (R)read, (U)pdate, (D)elete" methods.
+The $tastypieObjects class is held responsible for providing the "(C)reate, (R)ead, (U)pdate, (D)elete" methods.
 
 ```javascript
 $scope.song = $scope.Song.objects.$create();
