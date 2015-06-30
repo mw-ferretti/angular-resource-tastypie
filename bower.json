@@ -35,6 +35,12 @@
     "url": "https://github.com/mw-ferretti/angular-resource-tastypie.git"
   },
   "ignore": [
-    "**/.*"
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "dev",
+    "examples"
   ]
 }
