@@ -6,7 +6,9 @@
     "Marcos William Ferretti <ferretti.spo@gmail.com>"
   ],
   "description": "RESTful AngularJs client for Django-Tastypie or equivalent schema.",
-  "main": ["./src/angular-resource-tastypie.min.js"],
+  "main": [
+    "src/angular-resource-tastypie.min.js"
+  ],
   "moduleType": [
     "amd",
     "globals",
@@ -31,5 +33,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/mw-ferretti/angular-resource-tastypie.git"
-  }
+  },
+  "ignore": [
+    "**/.*"
+  ]
 }
