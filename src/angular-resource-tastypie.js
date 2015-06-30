@@ -172,8 +172,12 @@ angular.module('ngResourceTastypie', ['ngResource'])
     }
 
     function changePage(self, index, update){
-        if (((index != self.index) || (update)) && (index > 0) && (index <= self.length)){
-            
+        if((index == self.index) && (!update)){
+            var msg = '[$tastypiePaginator][$get] '.concat('Index ', index, ' has already been loaded.');
+            return promise_except_data_invalid(msg);
+        }
+        
+        if ((index > 0) && (index <= self.length)){            
             self.resource.working = true;
             var filters = angular.copy(self.filters);
             filters.offset = ((index-1)*self.meta.limit);
