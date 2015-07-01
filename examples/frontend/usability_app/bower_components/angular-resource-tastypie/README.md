@@ -33,6 +33,10 @@ Requirements for the backend:
 
 [See how to use.](https://github.com/mw-ferretti/angular-resource-tastypie/tree/master/examples)
 
+##Install
+- Manual: download [source](https://github.com/mw-ferretti/angular-resource-tastypie/tree/master/src) - [See how to use.](https://github.com/mw-ferretti/angular-resource-tastypie/tree/master/examples/frontend/simple_app)
+- Bower: "bower install angular-resource-tastypie" - [See how to use.](https://github.com/mw-ferretti/angular-resource-tastypie/tree/master/examples/frontend/usability_app)
+
 ##Usage
 ```javascript
 angular.module('myApp', ['ngResourceTastypie'])
@@ -318,6 +322,25 @@ $scope.Song.objects.$get({id:100}).then(
     }
 );
 ```
+
+##Working status
+1. $tastypie.working: Global requests (return true or false)
+2. YourService.working: Individual service requests (return true or false) 
+
+Informe the request status for user. EX:
+
+```javascript
+.controller('ProjectCtrl', ['$scope', '$tastypie', '$tastypieResource', function($scope, $tastypie, $tastypieResource){
+    $scope.Api = $tastypie;
+    $scope.Song = new $tastypieResource('song', {limit:4});
+}])
+```
+
+```html
+<span ng-show="Api.working"> >>> Api working ...</span>
+<span ng-show="Song.working"> >>> Service Song working ...</span>
+```
+[See how to use.](https://github.com/mw-ferretti/angular-resource-tastypie/tree/master/examples)
 
 ##Class Diagram
 ![Class Diagram](/dev/ClassDiagram.png)

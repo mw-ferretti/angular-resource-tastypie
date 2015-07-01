@@ -17,7 +17,7 @@
 
     <!-- Angular Resource Tastypie Dependencies -->
     <script src="bower_components/angular-resource/angular-resource.min.js"></script>
-    <script src="bower_components/angular-resource-tastypie/src/angular-resource-tastypie.min.js"></script>
+    <script src="bower_components/angular-resource-tastypie/angular-resource-tastypie.min.js"></script>
 
     <!-- Angular Material Dependencies -->
     <script src="bower_components/angular-animate/angular-animate.min.js"></script>
@@ -51,7 +51,7 @@
                 <span><a href="https://github.com/mw-ferretti/angular-resource-tastypie" target="_blank">Angular Resource Tastypie</a></span>
             </h2>
             <span flex></span>
-            <a href="http://opensource.org/" target="_blank"><img src="osi_keyhole_100X100_90ppi.png" width="60px" style="margin-right: 20px;"></a>
+            <a href="http://opensource.org/" target="_blank"><img src="bower_components/osi_keyhole_100X100_90ppi.png" width="60px" style="margin-right: 20px;"></a>
             <div style="height: 50px; margin-right: 15px;">            
                 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                     <input type="hidden" name="cmd" value="_s-xclick">
@@ -191,6 +191,8 @@
             <md-progress-linear ng-if="Song.working" md-mode="indeterminate"></md-progress-linear>
         </div>
     </md-content>
+    
+Ferretti Tecnology Ltda
 </body>
 
 </html>
