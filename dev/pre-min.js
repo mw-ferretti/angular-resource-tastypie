@@ -1,6 +1,6 @@
 /**
- * @license Angular Resource Tastypie v1.0.0
- * (c) 2014-2015 Marcos William Ferretti, https://github.com/mw-ferretti/angular-resource-tastypie
+ * @license Angular Resource Tastypie v1.0.1
+ * (c) 2014-2016 Marcos William Ferretti, https://github.com/mw-ferretti/angular-resource-tastypie
  * License: MIT
  */
 
@@ -8,10 +8,10 @@ var ngResourceTastypie = {
     name: 'Angular Resource Tastypie',
     description: 'RESTful AngularJs client for Django-Tastypie or equivalent schema.',
     version: {
-        full: '1.0.0', 
+        full: '1.0.1', 
         major: 1, 
         minor: 0, 
-        dot: 0, 
+        dot: 1, 
         codeName: 'Alpha'
     },
     author: {
@@ -20,7 +20,7 @@ var ngResourceTastypie = {
         github: 'https://github.com/mw-ferretti/',
         linkedin: 'https://www.linkedin.com/in/mwferretti'
     },
-    license: 'MIT, (c) 2014-2015 Marcos William Ferretti',
+    license: 'MIT, (c) 2014-2016 Marcos William Ferretti',
     source: 'https://github.com/mw-ferretti/angular-resource-tastypie'
 };
 
@@ -180,9 +180,16 @@ function TastypiePaginatorFactory($resource, $tastypie, $q){
             
             var promise = $resource(self.resource.endpoint, self.resource.defaults).get(filters).$promise.then(
                 function(result){
-                    if(result.meta.offset == result.meta.total_count)
-                        changePage(self, (index - 1), true);
-                    else{
+                    if(result.meta.offset == result.meta.total_count){                        
+                        if((index - 1) == 0){
+                            setPage(self, result);
+                            self.resource.working = false;
+                            return self;
+                        }else{
+                            self.resource.working = false;
+                            return changePage(self, (index - 1), true);
+                        }
+                    }else{
                         setPage(self, result);
                         self.resource.working = false;
                         return self;
@@ -196,8 +203,8 @@ function TastypiePaginatorFactory($resource, $tastypie, $q){
                 }
             );
             return promise;
-        }else{            
-            var msg = '[$tastypiePaginator][$get] '.concat('Index ', index, ' not exist.');
+        }else{           
+            var msg = '[$tastypiePaginator][$get] '.concat('Index ', index, ' not exist.');            
             return promise_except_data_invalid(msg);
         }
     }
@@ -326,7 +333,7 @@ function TastypieObjectsFactory($resource, $tastypiePaginator, $q){
             var fields = this;        
             angular.extend(fields, (data || {}));
             
-            if(!fields.hasOwnProperty('id')){
+            if(!fields.hasOwnProperty('id') || !fields.id){
                 var msg = '[$tastypieObjects][$update] '.concat('Attribute [id] is required.');
                 return promise_except_data_invalid(msg);
             }
@@ -353,7 +360,7 @@ function TastypieObjectsFactory($resource, $tastypiePaginator, $q){
             var fields = this;
             angular.extend(fields, (data || {}));
             
-            if(!fields.hasOwnProperty('id')){
+            if(!fields.hasOwnProperty('id') || !fields.id){
                 var msg = '[$tastypieObjects][$delete] '.concat('Attribute [id] is required.');
                 return promise_except_data_invalid(msg);
             }
