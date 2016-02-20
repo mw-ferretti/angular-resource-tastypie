@@ -154,7 +154,7 @@ angular.module('ngResourceTastypie', ['ngResource'])
             var promise = $resource(end_url).get().$promise.then(
                 function(result){
                     setPage(self, result);
-                    self.resource.working = false;
+                    // self.resource.working = false;
                     return self;
                 },
                 function(error){
@@ -195,7 +195,7 @@ angular.module('ngResourceTastypie', ['ngResource'])
                         }
                     }else{
                         setPage(self, result);
-                        self.resource.working = false;
+                        // self.resource.working = false;
                         return self;
                     }
                 },
@@ -298,7 +298,7 @@ angular.module('ngResourceTastypie', ['ngResource'])
             self.resource.working = true;
             var promise = fields.$get_uri().then(
                 function(result){
-                    self.resource.working = false;
+                    // self.resource.working = false;
                     return result;
                 },
                 function(error){
@@ -319,7 +319,7 @@ angular.module('ngResourceTastypie', ['ngResource'])
             self.resource.working = true;
             var promise = ws.then(
                 function(result){
-                    self.resource.working = false;
+                    // self.resource.working = false;
                     if (typeof(self.resource.page.refresh) == typeof(Function))
                         self.resource.page.refresh();
                     return result;
@@ -346,7 +346,7 @@ angular.module('ngResourceTastypie', ['ngResource'])
             self.resource.working = true;
             var promise = fields.$patch().then(
                 function(result){
-                    self.resource.working = false;
+                    // self.resource.working = false;
                     if (typeof(self.resource.page.refresh) == typeof(Function))
                         self.resource.page.refresh();
                     return result;
@@ -373,7 +373,7 @@ angular.module('ngResourceTastypie', ['ngResource'])
             self.resource.working = true;
             var promise = fields.$remove().then(
                 function(result){
-                    self.resource.working = false;
+                    // self.resource.working = false;
                     angular.forEach(fields, function(value, key){delete fields[key]});
                     if (typeof(self.resource.page.refresh) == typeof(Function))
                             self.resource.page.refresh();
@@ -408,7 +408,7 @@ angular.module('ngResourceTastypie', ['ngResource'])
             self.resource.working = true;
             var promise = this.$get(filter).then(
                 function(result){
-                    self.resource.working = false;
+                    // self.resource.working = false;
                     self.resource.page = new $tastypiePaginator(self.resource, filter, result);                    
                     return self.resource.page;
                 },
