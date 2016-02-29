@@ -490,3 +490,4 @@ ResourceTastypieModule.factory('$tastypieObjects', TastypieObjectsFactory);
 
 TastypieResourceFactory.$inject = ['$resource', '$tastypie', '$tastypiePaginator', '$tastypieObjects'];
 ResourceTastypieModule.factory('$tastypieResource', TastypieResourceFactory);
+

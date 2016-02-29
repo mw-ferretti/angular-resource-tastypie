@@ -477,3 +477,4 @@ angular.module('ngResourceTastypie', ['ngResource'])
 
         return $tastypieResource;
 }]);
+
