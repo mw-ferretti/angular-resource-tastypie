@@ -11,11 +11,12 @@ EX:
 1. cd backend/
 2. pip install -r requirements.txt
 3. cd myproject
-4. ./manage.py syncdb
-5. ./manage.py runserver 0.0.0.0:8001
+4. ./manage.py makemigrations
+5. ./manage.py migrate
+6. ./manage.py runserver 0.0.0.0:8001
 
 ```
-Django admin superuser "admin", password "1234"
+Django admin superuser "admin", password "abcd8585"
 ```
 
 ##Frontend:

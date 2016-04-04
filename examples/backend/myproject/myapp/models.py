@@ -7,6 +7,6 @@ class Song(models.Model):
 
     def __str__(self):
         return '%s - %s, by %s.' % (self.rank, self.song, self.artist)
-    
+
     class Meta:
         ordering = ['rank',]

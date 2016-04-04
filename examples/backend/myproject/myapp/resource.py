@@ -12,17 +12,18 @@ class SongResource(ModelResource):
         authentication = ApiKeyAuthentication()
         authorization = DjangoAuthorization()
         always_return_data = True
-        
+
         filtering = {
             'id': ['exact'],
             'rank': ['exact', 'range', 'gt', 'gte', 'lt', 'lte'],
             'song': ['exact', 'icontains'],
             'artist': ['exact', 'icontains'],
         }
-        
-    def build_filters(self, filters=None):
+
+    def build_filters(self, filters=None, ignore_bad_filters=True):
         if filters is None:
             filters = {}
+
         orm_filters = super(SongResource, self).build_filters(filters)
 
         if('search' in filters):
@@ -44,3 +45,4 @@ class SongResource(ModelResource):
         semi_filtered = super(SongResource, self).apply_filters(request, applicable_filters)
 
         return semi_filtered.filter(custom) if custom else semi_filtered
+

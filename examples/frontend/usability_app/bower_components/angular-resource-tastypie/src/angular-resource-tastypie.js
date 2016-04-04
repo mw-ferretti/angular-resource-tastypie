@@ -1,5 +1,5 @@
 /**
- * @license Angular Resource Tastypie v1.0.1
+ * @license Angular Resource Tastypie v1.0.2
  * (c) 2014-2016 Marcos William Ferretti, https://github.com/mw-ferretti/angular-resource-tastypie
  * License: MIT
  */

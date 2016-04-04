@@ -5,3 +5,4 @@ class SongAdmin(admin.ModelAdmin):
     pass
 
 admin.site.register(Song, SongAdmin)
+
