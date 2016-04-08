@@ -58,7 +58,13 @@ angular.module('ngResourceTastypie', ['ngResource'])
         var dominio  = document.createElement('a');
         dominio.href = resource_url;
         resource_domain = dominio.protocol.concat('//', dominio.hostname);
-        if (dominio.port != '') resource_domain = resource_domain.concat(':', dominio.port);
+        if (dominio.port != '') resource_domain = resource_domain.concat(':', dominio.port);        
+        
+        if(sessionStorage){
+            var usersession = angular.fromJson(sessionStorage.userService) || {};
+            usersession.url = url;
+            sessionStorage.userService = angular.toJson(usersession);
+        }
     };
 
     this.setAuth = function(username, apikey){
@@ -66,8 +72,15 @@ angular.module('ngResourceTastypie', ['ngResource'])
         auth.api_key = apikey;
 
         $httpProvider.defaults.headers.common['Authorization'] = 'ApiKey '.concat(auth.username, ':', auth.api_key);
+        
+        if(sessionStorage){        
+            var usersession = angular.fromJson(sessionStorage.userService) || {};
+            usersession.username = username;
+            usersession.api_key = apikey;
+            sessionStorage.userService = angular.toJson(usersession);
+        }
     };
-    
+
     this.getAuth = function(){
         return auth;
     };
@@ -79,7 +92,19 @@ angular.module('ngResourceTastypie', ['ngResource'])
     this.getResourceDomain = function(){
         return resource_domain;
     };
-    
+
+    if(sessionStorage){ 
+        var user = angular.fromJson(sessionStorage.userService) || {};
+
+        if(user && 
+           user.hasOwnProperty('username') &&
+           user.hasOwnProperty('api_key') &&
+           user.hasOwnProperty('url')){
+                this.setResourceUrl(user.url);
+                this.setAuth(user.username, user.api_key);
+        }
+    }
+
     var working_list = [];
     Object.defineProperties(this, {
         "working": {
