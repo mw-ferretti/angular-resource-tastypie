@@ -89,16 +89,22 @@ http://django-tastypie.readthedocs.org/en/latest/authentication.html
 
 ```javascript
 //Access $tastypieProvider in the controller
-//Login sample:
-.controller('LoginCtrl', ['$scope', '$tastypie', '$http', function($scope, $tastypie, $http){
+//Login and Logout sample:
+.controller('AuthCtrl', ['$scope', '$tastypie', '$http', function($scope, $tastypie, $http){
     $scope.login = function(){
         var data = {
             userName: $scope.userName,
             password: $scope.password
-        }
-        $http.post('/loginUrl', data).success(response){
+        };
+        $http.post('/loginUrl', data).success(function(response){
             $tastypie.setAuth(response.username, response.api_key);
-        }
+        });
+    }
+    
+    $scope.logout = function(){
+        var data = $tastypie.getAuth();
+        $http.post('/logoutUrl', data);
+        $tastypie.close(); //clean user session data
     }
 }]);
 ```
@@ -327,6 +333,9 @@ $scope.Song.objects.$get({id:100}).then(
 1. $tastypie.working: Global requests (return true or false)
 2. YourService.working: Individual service requests (return true or false) 
 
+It is usual for when you need to show an animation of "waiting", "working", "loading", etc ... 
+at the time the user makes a request. Ex: save, update, delete, search, etc ...
+
 Informe the request status for user. EX:
 
 ```javascript
@@ -337,8 +346,8 @@ Informe the request status for user. EX:
 ```
 
 ```html
-<span ng-show="Api.working"> >>> Api working ...</span>
-<span ng-show="Song.working"> >>> Service Song working ...</span>
+<span ng-show="Api.working"> >>> Api working ... please wait...</span>
+<span ng-show="Song.working"> >>> Service Song working ... please wait ...</span>
 ```
 [See how to use.](https://github.com/mw-ferretti/angular-resource-tastypie/tree/master/examples)
 

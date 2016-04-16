@@ -1,5 +1,5 @@
 /**
- * @license Angular Resource Tastypie v1.0.2
+ * @license Angular Resource Tastypie v1.0.3
  * (c) 2014-2016 Marcos William Ferretti, https://github.com/mw-ferretti/angular-resource-tastypie
  * License: MIT
  */
@@ -8,10 +8,10 @@ var ngResourceTastypie = {
     name: 'Angular Resource Tastypie',
     description: 'RESTful AngularJs client for Django-Tastypie or equivalent schema.',
     version: {
-        full: '1.0.1', 
+        full: '1.0.3', 
         major: 1, 
         minor: 0, 
-        dot: 1, 
+        dot: 3, 
         codeName: 'Alpha'
     },
     author: {
@@ -58,7 +58,13 @@ angular.module('ngResourceTastypie', ['ngResource'])
         var dominio  = document.createElement('a');
         dominio.href = resource_url;
         resource_domain = dominio.protocol.concat('//', dominio.hostname);
-        if (dominio.port != '') resource_domain = resource_domain.concat(':', dominio.port);
+        if (dominio.port != '') resource_domain = resource_domain.concat(':', dominio.port);        
+        
+        if(sessionStorage){
+            var usersession = angular.fromJson(sessionStorage.userService) || {};
+            usersession.url = url;
+            sessionStorage.userService = angular.toJson(usersession);
+        }
     };
 
     this.setAuth = function(username, apikey){
@@ -66,8 +72,26 @@ angular.module('ngResourceTastypie', ['ngResource'])
         auth.api_key = apikey;
 
         $httpProvider.defaults.headers.common['Authorization'] = 'ApiKey '.concat(auth.username, ':', auth.api_key);
+        
+        if(sessionStorage){        
+            var usersession = angular.fromJson(sessionStorage.userService) || {};
+            usersession.username = username;
+            usersession.api_key = apikey;
+            sessionStorage.userService = angular.toJson(usersession);
+        }
     };
     
+    this.close = function(){
+        auth.username = '';
+        auth.api_key = '';
+        resource_url = '';
+        resource_domain = '';
+        
+        if(sessionStorage){
+            sessionStorage.userService = angular.toJson({});
+        }
+    };
+
     this.getAuth = function(){
         return auth;
     };
@@ -79,7 +103,19 @@ angular.module('ngResourceTastypie', ['ngResource'])
     this.getResourceDomain = function(){
         return resource_domain;
     };
-    
+
+    if(sessionStorage){ 
+        var user = angular.fromJson(sessionStorage.userService) || {};
+
+        if(user && 
+           user.hasOwnProperty('username') &&
+           user.hasOwnProperty('api_key') &&
+           user.hasOwnProperty('url')){
+                this.setResourceUrl(user.url);
+                this.setAuth(user.username, user.api_key);
+        }
+    }
+
     var working_list = [];
     Object.defineProperties(this, {
         "working": {
@@ -101,7 +137,8 @@ angular.module('ngResourceTastypie', ['ngResource'])
             auth:this.getAuth(),
             working:this.working,
             setAuth:this.setAuth, 
-            setResourceUrl:this.setResourceUrl
+            setResourceUrl:this.setResourceUrl,
+            close:this.close
         }
     };
 })
@@ -296,7 +333,7 @@ angular.module('ngResourceTastypie', ['ngResource'])
             }
             
             self.resource.working = true;
-            var promise = fields.$get_uri().then(
+            var promise = fields.$get_uri(fields).then(
                 function(result){
                     self.resource.working = false;
                     return result;
@@ -430,7 +467,7 @@ angular.module('ngResourceTastypie', ['ngResource'])
     };
     
     $tastypieObjects.prototype.$get = function(data){
-        return create(this, data).$get();
+        return create(this).$get(data);
     };
     
     $tastypieObjects.prototype.$delete = function(data){
@@ -477,3 +514,4 @@ angular.module('ngResourceTastypie', ['ngResource'])
 
         return $tastypieResource;
 }]);
+
