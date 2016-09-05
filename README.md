@@ -112,8 +112,8 @@ http://django-tastypie.readthedocs.org/en/latest/authentication.html
     }
     
     $scope.logout = function(){
-        var data = $tastypie.getAuth();
-        $http.post('/logoutUrl', data);
+        var provider = $tastypie.getProvider('providerName');
+        $http.post('/logoutUrl', {username: provider.username, apikey: provider.apikey});
         $tastypie.clearAuthSession('providerName'); //clean auth session data
     }
 }]);
