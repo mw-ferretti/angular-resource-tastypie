@@ -34,22 +34,25 @@ Requirements for the backend:
 [See how to use.](https://github.com/mw-ferretti/angular-resource-tastypie/tree/master/examples)
 
 ##Install
-- Manual: download [source](https://github.com/mw-ferretti/angular-resource-tastypie/tree/master/src) - [See how to use.](https://github.com/mw-ferretti/angular-resource-tastypie/tree/master/examples/frontend/simple_app)
-- Bower: "bower install angular-resource-tastypie" - [See how to use.](https://github.com/mw-ferretti/angular-resource-tastypie/tree/master/examples/frontend/usability_app)
+bower install angular-resource-tastypie - [See how to use.](https://github.com/mw-ferretti/angular-resource-tastypie/tree/master/examples/frontend/usability_app)
 
 ##Usage
 ```javascript
 angular.module('myApp', ['ngResourceTastypie'])
 
 .config(function($tastypieProvider){
-    $tastypieProvider.setResourceUrl('http://127.0.0.1:8001/api/v1/');
-    $tastypieProvider.setAuth('admin','320c4e7da6ed93946f97f51e6f4c8354a098bb6e');
+    $tastypieProvider
+    .add('provider1', {
+        url: 'http://address1/api/v1/',
+        username: 'username',
+        apikey: 'apikey'
+    });
 })
 
 .controller('MyCtrl', ['$scope', '$tastypieResource', function($scope, $tastypieResource){
 
-    $scope.Service = new $tastypieResource('service', {limit:5});
-    $scope.Service.objects.$find();
+    $scope.ServiceEndpoint = new $tastypieResource('ServiceEndpoint', {limit:5});
+    $scope.ServiceEndpoint.objects.$find();
     
 }]);
 ```
@@ -62,8 +65,12 @@ angular.module('myApp', ['ngResourceTastypie'])
 - <h5>Add your web services provider configuration:</h5>
 ```javascript
 .config(function($tastypieProvider){
-    $tastypieProvider.setResourceUrl('http://127.0.0.1:8001/api/v1/');
-    $tastypieProvider.setAuth('admin','320c4e7da6ed93946f97f51e6f4c8354a098bb6e');
+    $tastypieProvider
+    .add('provider1', {
+        url: 'http://address1/api/v1/',
+        username: 'username',
+        apikey: 'apikey'
+    });
 })
 ```
 
@@ -76,11 +83,14 @@ angular.module('myApp', ['ngResourceTastypie'])
 
 <h5>IMPORTANT:</h5>
 ```javascript
-$tastypieProvider.setAuth('username','api_key');
+$tastypieProvider
+.add('provider1', {
+    apikey: 'apikey'
+});
 ```
 <blockquote>
 <p>
-This api_key was fixed only for demo purposes.<br>
+This apikey was fixed only for demo purposes.<br>
 You must generate a dynamic api_key after the user login, on backend authorization system, and then configure this attribute.<br>
 With django-tastypie this task is quite simple:<br>
 http://django-tastypie.readthedocs.org/en/latest/authentication.html
@@ -97,17 +107,49 @@ http://django-tastypie.readthedocs.org/en/latest/authentication.html
             password: $scope.password
         };
         $http.post('/loginUrl', data).success(function(response){
-            $tastypie.setAuth(response.username, response.api_key);
+            $tastypie.setProviderAuth('providerName', response.username, response.apikey)
         });
     }
     
     $scope.logout = function(){
         var data = $tastypie.getAuth();
         $http.post('/logoutUrl', data);
-        $tastypie.close(); //clean user session data
+        $tastypie.clearAuthSession('providerName'); //clean auth session data
     }
 }]);
 ```
+
+<h5>MULTI "PROVIDER" SAMPLE:</h5>
+```javascript
+angular.module('myApp', ['ngResourceTastypie'])
+
+.config(function($tastypieProvider){
+    $tastypieProvider
+    .add('provider1', {
+        url: 'http://address1/api/v1/',
+        username: 'username',
+        apikey: 'apikey'
+    })
+    .add('provider2', {
+        url: 'http://address2/api/v1/',
+        username: 'username',
+        apikey: 'apikey'
+    });
+    
+    $tastypieProvider.setDefault('provider1');
+})
+
+.controller('MyCtrl', ['$scope', '$tastypieResource', function($scope, $tastypieResource){
+
+    $scope.ServiceEndpoint = new $tastypieResource('ServiceEndpoint', {limit:5}); //using default provider - "provider1".
+    $scope.ServiceEndpoint.objects.$find();
+    
+    $scope.ServiceEndpoint = new $tastypieResource('ServiceEndpoint', {limit:5}, 'provider2'); //using selected provider - "provider2).
+    $scope.ServiceEndpoint.objects.$find();
+    
+}]);
+```
+
 
 ##Making queries
 The $tastypieResource class is held responsible for connecting on the specific "list endpoint".
