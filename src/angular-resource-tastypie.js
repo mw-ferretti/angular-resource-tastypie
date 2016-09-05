@@ -1,5 +1,5 @@
 /**
- * @license Angular Resource Tastypie v1.0.3
+ * @license Angular Resource Tastypie v1.0.4
  * (c) 2014-2016 Marcos William Ferretti, https://github.com/mw-ferretti/angular-resource-tastypie
  * License: MIT
  */
@@ -8,11 +8,11 @@ var ngResourceTastypie = {
     name: 'Angular Resource Tastypie',
     description: 'RESTful AngularJs client for Django-Tastypie or equivalent schema.',
     version: {
-        full: '1.0.3', 
+        full: '1.0.4',
         major: 1, 
         minor: 0, 
-        dot: 3, 
-        codeName: 'Alpha'
+        dot: 4, 
+        codeName: 'Cappuccino'
     },
     author: {
         name: 'Marcos William Ferretti',
@@ -34,16 +34,17 @@ if(angular.version.major < 1 || (angular.version.major == 1 && angular.version.m
 angular.module('ngResourceTastypie', ['ngResource'])
 .constant('ngResourceTastypie', ngResourceTastypie)
 
-.config(function($resourceProvider){
+.config(['$resourceProvider', function($resourceProvider){
     $resourceProvider.defaults.stripTrailingSlashes = false;
-})
+}])
 
-.provider('$tastypie', function($httpProvider){
-
+.provider('$tastypie', ['$httpProvider', function($httpProvider){
+    
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
     $httpProvider.defaults.headers.common['Content-Type'] = 'application/json';
 
+    var self = this;
     var resource_url = '';
     var resource_domain = '';
 
@@ -52,72 +53,266 @@ angular.module('ngResourceTastypie', ['ngResource'])
         api_key : ''
     };
 
-    this.setResourceUrl = function(url){
+    self.providers = {};
+    self.default = {};
+    
+    self.getProvider = function(providerName){
+        var provider = {};        
+        if(providerName == 'default'){
+            provider = self.default || {};
+        }else{
+            provider = self.providers[providerName] || {};
+        }
+        if(!provider.hasOwnProperty('url')){
+            throw '[$tastypieProvider][GetProvider] provider "'.concat(providerName,'" not found.');
+        }
+        return provider;
+    };
+    
+    self.setDefault = function(providerName){
+        if(!self.providers.hasOwnProperty(providerName)){
+            throw '[$tastypieProvider][ProviderSetDefault] Provider '.concat(providerName, ' not found.');
+        }
+        self.default = self.providers[providerName];
+        resource_url = self.default['url'];
+        resource_domain = self.default['domain'];
+        auth.username = self.default['username'];
+        auth.api_key = self.default['apikey'];
+        
+        if(typeof(Storage) !== "undefined"){
+            sessionStorage.$tastypieDefaultProvider = angular.toJson(self.default);
+        }
+    };
+    
+    self.add = function(providerName, providerObj){        
+        var validProviderName = (providerName && (typeof(providerName) === 'string' || providerName instanceof String));
+        if(!validProviderName){
+            throw '[$tastypieProvider][ProviderAdd] Invalid providerName string. Usage: add("providerName", {url:"address"})';
+        }        
+        if(!providerObj || !angular.isObject(providerObj) || !providerObj.hasOwnProperty('url')){
+            throw '[$tastypieProvider][ProviderAdd] Invalid providerObj object. Usage: add("providerName", {url:"address"})';
+        }        
+        if(self.providers[providerName]){
+            return self;
+        }
+        
+        providerObj.name = providerName;
+        
+        var el_href  = document.createElement('a');
+        el_href.href = providerObj.url;
+        var domain = el_href.protocol.concat('//', el_href.hostname);
+        if (el_href.port != '') domain = domain.concat(':', el_href.port); 
+        providerObj.domain = domain;
+        
+        if(!providerObj.hasOwnProperty('headers')){
+            providerObj.headers = {};
+        }
+        
+        if(!providerObj.headers.hasOwnProperty('Content-Type')){
+            providerObj.headers['Content-Type'] = 'application/json';
+        }         
+        
+        if(providerObj.hasOwnProperty('username') && providerObj.hasOwnProperty('apikey')){
+            providerObj.headers.Authorization = 'ApiKey '.concat(
+                providerObj.username, ':', providerObj.apikey
+            );
+        }        
+        
+        self.providers[providerName] = providerObj;
+        
+        if(!self.default.hasOwnProperty('name')){
+            self.setDefault(providerName);
+        }
+        
+        if(typeof(Storage) !== "undefined"){
+            sessionStorage.$tastypieProviders = angular.toJson(self.providers);
+        }
+
+        return self;  
+    };
+
+    self.httpExceptions = {};
+    self.httpExceptionsAdd = function(httpCode, callback){        
+        if(!httpCode){
+            throw '[$tastypieProvider][httpExceptionsAdd] Invalid httpCode integer. Usage: httpExceptionsAdd(httpCode, callback)';
+        }        
+        if(!callback || !angular.isFunction(callback)){
+            throw '[$tastypieProvider][httpExceptionsAdd] Invalid callback function. Usage: httpExceptionsAdd(httpCode, callback)';
+        }        
+        self.httpExceptions['c'.concat(httpCode)] = callback;        
+        return self;
+    };
+    
+    self.setProviderAuth = function(providerName, username, apikey){
+        var providerObj = self.getProvider(providerName);
+        providerObj.username = username;
+        providerObj.apikey = apikey;
+        
+        if(!providerObj.hasOwnProperty('headers')){
+            providerObj.headers = {};
+        }
+        
+        providerObj.headers.Authorization = 'ApiKey '.concat(
+            providerObj.username, ':', providerObj.apikey
+        );
+        
+        self.providers[providerName] = providerObj;
+        
+        if(self.default.name == providerName){
+            self.default = providerObj;            
+            if(typeof(Storage) !== "undefined"){
+                sessionStorage.$tastypieDefaultProvider = angular.toJson(self.default);
+            }
+        }
+        
+        if(typeof(Storage) !== "undefined"){
+            sessionStorage.$tastypieProviders = angular.toJson(self.providers);
+        }
+    };
+
+    self.setResourceUrl = function(url){
+        var validUrl = (url && (typeof(url) === 'string' || url instanceof String));
+        if(!validUrl){
+            throw '[$tastypieProvider][SetResourceUrl] Invalid URL.';
+        }
+        
         resource_url = url;
 
         var dominio  = document.createElement('a');
         dominio.href = resource_url;
         resource_domain = dominio.protocol.concat('//', dominio.hostname);
-        if (dominio.port != '') resource_domain = resource_domain.concat(':', dominio.port);        
+        if (dominio.port != '') resource_domain = resource_domain.concat(':', dominio.port);
         
-        if(sessionStorage){
-            var usersession = angular.fromJson(sessionStorage.userService) || {};
-            usersession.url = url;
-            sessionStorage.userService = angular.toJson(usersession);
+        self.default.name = 'default';    
+        if(!self.default.hasOwnProperty('headers')){
+            self.default.headers = {};
+        }        
+        if(!self.default.headers.hasOwnProperty('Content-Type')){
+            self.default.headers['Content-Type'] = 'application/json';
+        }
+        self.default.url = url;
+        self.default.domain = resource_domain;
+        
+        self.providers[self.default.name] = self.default;
+        
+        if(typeof(Storage) !== "undefined"){
+            sessionStorage.$tastypieDefaultProvider = angular.toJson(self.default);
+            sessionStorage.$tastypieProviders = angular.toJson(self.providers);
         }
     };
 
-    this.setAuth = function(username, apikey){
+    self.setAuth = function(username, apikey){
+        var validUsername = (username && (typeof(username) === 'string' || username instanceof String));
+        var validApikey = (apikey && (typeof(apikey) === 'string' || apikey instanceof String));
+        if(!validUsername){
+            throw '[$tastypieProvider][SetResourceUrl] Invalid username.';
+        }
+        if(!apikey){
+            throw '[$tastypieProvider][SetResourceUrl] Invalid apikey.';
+        }
+        
         auth.username = username;
         auth.api_key = apikey;
-
-        $httpProvider.defaults.headers.common['Authorization'] = 'ApiKey '.concat(auth.username, ':', auth.api_key);
         
-        if(sessionStorage){        
-            var usersession = angular.fromJson(sessionStorage.userService) || {};
-            usersession.username = username;
-            usersession.api_key = apikey;
-            sessionStorage.userService = angular.toJson(usersession);
+        self.default.name = 'default';   
+        if(!self.default.hasOwnProperty('headers')){
+            self.default.headers = {};
+        }        
+        if(!self.default.headers.hasOwnProperty('Content-Type')){
+            self.default.headers['Content-Type'] = 'application/json';
+        }
+        
+        self.default.username = username;
+        self.default.apikey = apikey;
+        self.default.headers.Authorization = 'ApiKey '.concat(username, ':', apikey);
+
+        self.providers[self.default.name] = self.default;
+        
+        if(typeof(Storage) !== "undefined"){
+            sessionStorage.$tastypieDefaultProvider = angular.toJson(self.default);
+            sessionStorage.$tastypieProviders = angular.toJson(self.providers);
         }
     };
     
-    this.close = function(){
-        auth.username = '';
-        auth.api_key = '';
-        resource_url = '';
-        resource_domain = '';
+    var clearAuthSessionAux = function(providerObj){
+        if(!angular.isObject(providerObj) || !providerObj.hasOwnProperty('url')){
+            throw '[$tastypieProvider][clearAuthProvider] Invalid provider.';
+        }
         
-        if(sessionStorage){
-            sessionStorage.userService = angular.toJson({});
+        if(providerObj.hasOwnProperty('username')){
+            providerObj.username = '';
+        }
+
+        if(providerObj.hasOwnProperty('apikey')){
+            providerObj.apikey = '';
+        }
+
+        if(providerObj.hasOwnProperty('headers')){
+            if(providerObj.headers.hasOwnProperty('Authorization')){
+                delete providerObj.headers["Authorization"];
+            }
+        }
+        
+        self.providers[providerObj.name] = providerObj;
+        
+        if(typeof(Storage) !== "undefined"){
+            sessionStorage.$tastypieProviders = angular.toJson(self.providers);
+        }
+
+        if(providerObj.name == self.default.name){
+            auth.username = '';
+            auth.api_key = '';
+            self.default = providerObj;            
+            if(typeof(Storage) !== "undefined"){
+                sessionStorage.$tastypieDefaultProvider = angular.toJson(self.default);
+            }
         }
     };
+    
+    self.clearAuthSession = function(providerName){
+        var validProviderName = (providerName && (typeof(providerName) === 'string' || providerName instanceof String));
+        
+        if(!validProviderName){
+            throw '[$tastypieProvider][ClearAuthSession] Invalid providerName.';
+        }
+        
+        if(providerName == 'all'){
+            var providerList = Object.keys(self.providers);        
+            for(var i=0; i<providerList.length; i++){
+                clearAuthSessionAux(self.providers[providerList[i]]);                
+            }            
+        }else{
+            clearAuthSessionAux(self.getProvider(providerName)); 
+        }
+    };
+    
+    self.close = function(){
+        self.clearAuthSession('all');
+    };
 
-    this.getAuth = function(){
+    self.getAuth = function(){
         return auth;
     };
 
-    this.getResourceUrl = function(){
+    self.getResourceUrl = function(){
         return resource_url;
     };
 
-    this.getResourceDomain = function(){
+    self.getResourceDomain = function(){
         return resource_domain;
     };
 
-    if(sessionStorage){ 
-        var user = angular.fromJson(sessionStorage.userService) || {};
-
-        if(user && 
-           user.hasOwnProperty('username') &&
-           user.hasOwnProperty('api_key') &&
-           user.hasOwnProperty('url')){
-                this.setResourceUrl(user.url);
-                this.setAuth(user.username, user.api_key);
-        }
+    if(typeof(Storage) !== "undefined"){ 
+        self.default = angular.fromJson(sessionStorage.$tastypieDefaultProvider) || {};  
+        self.providers = angular.fromJson(sessionStorage.$tastypieProviders) || {};
+        resource_url = self.default['url'];
+        resource_domain = self.default['domain'];
+        auth.username = self.default['username'];
+        auth.api_key = self.default['apikey'];
     }
 
     var working_list = [];
-    Object.defineProperties(this, {
+    Object.defineProperties(self, {
         "working": {
             "get": function(){
                 return (working_list.length > 0);
@@ -130,18 +325,27 @@ angular.module('ngResourceTastypie', ['ngResource'])
         }
     });
     
-    this.$get = function(){
+    self.$get = function(){
         return {
-            resource_url:this.getResourceUrl(),
-            resource_domain:this.getResourceDomain(),
-            auth:this.getAuth(),
-            working:this.working,
-            setAuth:this.setAuth, 
-            setResourceUrl:this.setResourceUrl,
-            close:this.close
+            providers:self.providers,
+            add:self.add,
+            getProvider:self.getProvider,
+            setDefault:self.setDefault,
+            setProviderAuth:self.setProviderAuth,
+            default:self.default,
+            clearAuthSession:self.clearAuthSession,
+            resource_url:self.getResourceUrl(),
+            resource_domain:self.getResourceDomain(),
+            auth:self.getAuth(),
+            working:self.working,
+            setAuth:self.setAuth, 
+            setResourceUrl:self.setResourceUrl,
+            close:self.close,
+            httpExceptionsAdd:self.httpExceptionsAdd,
+            httpExceptions:self.httpExceptions
         }
     };
-})
+}])
 
 .factory('$tastypiePaginator', ['$resource', '$tastypie', '$q', function($resource, $tastypie, $q){
 
@@ -188,16 +392,29 @@ angular.module('ngResourceTastypie', ['ngResource'])
     function getPage(self, end_url){
         if (end_url){
             self.resource.working = true;
-            var promise = $resource(end_url).get().$promise.then(
+            var promise = $resource(end_url, {}, {
+                'get':{
+                    method:'GET', 
+                    headers: self.resource.provider.headers
+                }                
+            }).get().$promise.then(
                 function(result){
                     setPage(self, result);
                     self.resource.working = false;
                     return self;
                 },
-                function(error){
+                function(error){                    
+                    var fn = $tastypie.httpExceptions['c'.concat(error.status)];                    
+                    if(fn && angular.isFunction(fn)){
+                        fn(error);
+                    }                    
                     error = error || {};
                     error.statusText = '[$tastypiePaginator][$get] '.concat(error.statusText || 'Server Not Responding.');
                     self.resource.working = false;
+                    var fn = $tastypie.httpExceptions['c'.concat(error.status)];                    
+                    if(fn && angular.isFunction(fn)){
+                        fn(error);
+                    }
                     throw error;
                 }
             );
@@ -219,7 +436,12 @@ angular.module('ngResourceTastypie', ['ngResource'])
             var filters = angular.copy(self.filters);
             filters.offset = ((index-1)*self.meta.limit);
             
-            var promise = $resource(self.resource.endpoint, self.resource.defaults).get(filters).$promise.then(
+            var promise = $resource(self.resource.endpoint, self.resource.defaults, {
+                'get':{
+                    method:'GET', 
+                    headers: self.resource.provider.headers
+                }                
+            }).get(filters).$promise.then(
                 function(result){
                     if(result.meta.offset == result.meta.total_count){                        
                         if((index - 1) == 0){
@@ -240,6 +462,10 @@ angular.module('ngResourceTastypie', ['ngResource'])
                     error = error || {};
                     error.statusText = '[$tastypiePaginator][$get] '.concat(error.statusText || 'Server Not Responding.');
                     self.resource.working = false;
+                    var fn = $tastypie.httpExceptions['c'.concat(error.status)];                    
+                    if(fn && angular.isFunction(fn)){
+                        fn(error);
+                    }
                     throw error;
                 }
             );
@@ -293,7 +519,7 @@ angular.module('ngResourceTastypie', ['ngResource'])
 }])
 
 
-.factory('$tastypieObjects', ['$resource', '$tastypiePaginator', '$q', function($resource, $tastypiePaginator, $q){
+.factory('$tastypieObjects', ['$resource', '$tastypiePaginator', '$q', '$tastypie', function($resource, $tastypiePaginator, $q, $tastypie){
 
     function $tastypieObjects(tastypieResource){
         this.resource = tastypieResource;
@@ -309,20 +535,54 @@ angular.module('ngResourceTastypie', ['ngResource'])
     function create(self, data){
 
         var custom_method = {
-            'post':{method:'POST'},
-            'save':{method:'POST'},
-            'get':{method:'GET', url:self.resource.endpoint.concat(":id/")},
-            'get_uri':{method:'GET', url:self.resource.endpoint.concat(":id/")},
-            'update':{method:'PATCH', url:self.resource.endpoint.concat(":id/")},
-            'put':{method:'PUT', url:self.resource.endpoint.concat(":id/")},
-            'patch':{method:'PATCH', url:self.resource.endpoint.concat(":id/")},
-            'delete':{method:'DELETE', url:self.resource.endpoint.concat(":id/")},
-            'remove':{method:'DELETE', url:self.resource.endpoint.concat(":id/")}            
+            'post':{
+                method:'POST', 
+                headers: self.resource.provider.headers
+            },
+            'save':{
+                method:'POST', 
+                headers: self.resource.provider.headers
+            },
+            'get':{
+                method:'GET', 
+                headers: self.resource.provider.headers,
+                url:self.resource.endpoint.concat(":id/")
+            },
+            'get_uri':{
+                method:'GET', 
+                headers: self.resource.provider.headers,
+                url:self.resource.endpoint.concat(":id/")
+            },
+            'update':{
+                method:'PATCH', 
+                headers: self.resource.provider.headers,
+                url:self.resource.endpoint.concat(":id/")
+            },
+            'put':{
+                method:'PUT', 
+                headers: self.resource.provider.headers,
+                url:self.resource.endpoint.concat(":id/")
+            },
+            'patch':{
+                method:'PATCH', 
+                headers: self.resource.provider.headers,
+                url:self.resource.endpoint.concat(":id/")
+            },
+            'delete':{
+                method:'DELETE', 
+                headers: self.resource.provider.headers,
+                url:self.resource.endpoint.concat(":id/")
+            },
+            'remove':{
+                method:'DELETE',
+                headers: self.resource.provider.headers,
+                url:self.resource.endpoint.concat(":id/")
+            }            
         };
 
         var obj = $resource(self.resource.endpoint, {id:'@id'}, custom_method);
-        delete obj.prototype['$query'];
-        
+        delete obj.prototype['$query'];        
+        obj.prototype.$domain = self.resource.provider.domain;        
         obj.prototype.$get = function(data){         
             var fields = this;        
             angular.extend(fields, (data || {}));
@@ -342,6 +602,10 @@ angular.module('ngResourceTastypie', ['ngResource'])
                     error = error || {};
                     error.statusText = '[$tastypieObjects][$get] '.concat(error.statusText || 'Server Not Responding.');
                     self.resource.working = false;
+                    var fn = $tastypie.httpExceptions['c'.concat(error.status)];                    
+                    if(fn && angular.isFunction(fn)){
+                        fn(error);
+                    }
                     throw error;
                 }
             );
@@ -365,13 +629,17 @@ angular.module('ngResourceTastypie', ['ngResource'])
                     error = error || {};
                     error.statusText = '[$tastypieObjects][$save] '.concat(error.statusText || 'Server Not Responding.');
                     self.resource.working = false;
+                    var fn = $tastypie.httpExceptions['c'.concat(error.status)];                    
+                    if(fn && angular.isFunction(fn)){
+                        fn(error);
+                    }
                     throw error;
                 }
             );        
             return promise;
         };
         
-        obj.prototype.$update = function(data){ 
+        obj.prototype.$update = function(data){
             var fields = this;        
             angular.extend(fields, (data || {}));
             
@@ -392,6 +660,10 @@ angular.module('ngResourceTastypie', ['ngResource'])
                     error = error || {};
                     error.statusText = '[$tastypieObjects][$update] '.concat(error.statusText || 'Server Not Responding.');
                     self.resource.working = false;
+                    var fn = $tastypie.httpExceptions['c'.concat(error.status)];                    
+                    if(fn && angular.isFunction(fn)){
+                        fn(error);
+                    }
                     throw error;
                 }
             );        
@@ -420,6 +692,10 @@ angular.module('ngResourceTastypie', ['ngResource'])
                     error = error || {};
                     error.statusText = '[$tastypieObjects][$delete] '.concat(error.statusText || 'Server Not Responding.');
                     self.resource.working = false;
+                    var fn = $tastypie.httpExceptions['c'.concat(error.status)];                    
+                    if(fn && angular.isFunction(fn)){
+                        fn(error);
+                    }
                     throw error;
                 }                                             
             );
@@ -435,10 +711,10 @@ angular.module('ngResourceTastypie', ['ngResource'])
     };    
     
     function find(self){
-         
+
         var obj = $resource(self.resource.endpoint, self.resource.defaults, {
-            'get':{method:'GET'},
-            'find':{method:'GET'}
+            'get':{method:'GET', headers: self.resource.provider.headers},
+            'find':{method:'GET', headers: self.resource.provider.headers}
         });
         
         obj.prototype.$find = function(filter){
@@ -453,6 +729,10 @@ angular.module('ngResourceTastypie', ['ngResource'])
                     error = error || {};
                     error.statusText = '[$tastypieObjects][$find] '.concat(error.statusText || 'Server Not Responding.');
                     self.resource.working = false;
+                    var fn = $tastypie.httpExceptions['c'.concat(error.status)];                    
+                    if(fn && angular.isFunction(fn)){
+                        fn(error);
+                    }
                     throw error;
                 }
             );
@@ -487,11 +767,16 @@ angular.module('ngResourceTastypie', ['ngResource'])
 
 .factory('$tastypieResource', ['$resource', '$tastypie', '$tastypiePaginator', '$tastypieObjects', function($resource, $tastypie, $tastypiePaginator, $tastypieObjects){
 
-        function $tastypieResource(service, default_filters) {
+        function $tastypieResource(service, default_filters, provider_name) {
+            
+            var validService = (service && (typeof(service) === 'string' || service instanceof String));
 
-            if (!service) throw '[$tastypieResource] Unknown service name.';
-
-            this.endpoint = $tastypie.resource_url.concat(service, '/');
+            if (!validService){
+                throw '[$tastypieResource] Unknown service name.';
+            }
+            
+            this.provider = $tastypie.getProvider(provider_name || 'default');            
+            this.endpoint = this.provider.url.concat(service, '/');
             this.defaults = default_filters || {};
             this.page = {};
             this.objects = new $tastypieObjects(this);
