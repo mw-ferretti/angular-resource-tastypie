@@ -144,7 +144,7 @@ angular.module('myApp', ['ngResourceTastypie'])
     $scope.ServiceEndpoint = new $tastypieResource('ServiceEndpoint', {limit:5}); //using default provider - "provider1".
     $scope.ServiceEndpoint.objects.$find();
     
-    $scope.ServiceEndpoint = new $tastypieResource('ServiceEndpoint', {limit:5}, 'provider2'); //using selected provider - "provider2).
+    $scope.ServiceEndpoint = new $tastypieResource('ServiceEndpoint', {limit:5}, 'provider2'); //using selected provider - "provider2".
     $scope.ServiceEndpoint.objects.$find();
     
 }]);
