@@ -1,6 +1,8 @@
 # Angular Resource Tastypie
 [RESTful](http://www.ibm.com/developerworks/library/ws-restful/) AngularJs client for [Django-Tastypie](https://django-tastypie.readthedocs.org/en/latest/) or equivalent schema.
 
+> [For angular2+ use the version in TypeScript (ts-resource-tastypie)](https://github.com/mw-ferretti/ts-resource-tastypie)
+
 Features:
 1. Pagination
 2. Complete CRUD
