@@ -371,7 +371,7 @@ $scope.Song.objects.$get({id:100}).then(
 );
 ```
 
-##Working status
+## Working status
 1. $tastypie.working: Global requests (return true or false)
 2. YourService.working: Individual service requests (return true or false) 
 
