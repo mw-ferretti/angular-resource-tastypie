@@ -1,20 +1,20 @@
-#Angular Resource Tastypie
+# Angular Resource Tastypie
 [RESTful](http://www.ibm.com/developerworks/library/ws-restful/) AngularJs client for [Django-Tastypie](https://django-tastypie.readthedocs.org/en/latest/) or equivalent schema.
 
-<h5>Features:</h5>
+Features:
 1. Pagination
 2. Complete CRUD
 3. Abstract AJAX(J) providing operations which are similar to the [Django Model API](https://docs.djangoproject.com/en/dev/topics/db/queries/)
 
-##Context
+## Context
 [RESTful](http://www.ibm.com/developerworks/library/ws-restful/) architecture with [AngularJs](https://angularjs.org/) and [Django](https://www.djangoproject.com/).
 ![Architecture](/dev/arq_rest_angular_django.jpg)
 
-<h5>IMPORTANT:</h5>
+IMPORTANT:
 - Backend: Security rules for data persistence and access.
 - Frontend: [Usability](https://en.wikipedia.org/wiki/Usability) rules, only!
 
-<h5>BENEFITS:</h5>
+BENEFITS:
 - Asynchronous development between frontend and backend developers.
 - Reuse of web developers team to create mobile applications.
 - The frontend is isolated, we can distribute it as an application by using [Apache Cordova](https://cordova.apache.org/).
@@ -22,7 +22,7 @@
 - Business rules are the same for different types of [UI](https://en.wikipedia.org/wiki/User_interface). We can create different [UIs](https://en.wikipedia.org/wiki/User_interface) with any other programming language, passing through the same business rules on the backend.
 - And more ...
 
-##Requirements
+## Requirements
 - Frontend: [AngularJs 1.3+](https://angularjs.org/) 
 - Backend:  [Django-Tastypie](https://django-tastypie.readthedocs.org/en/latest/) or equivalent schema.
 
@@ -33,10 +33,10 @@ Requirements for the backend:
 
 [See how to use.](https://github.com/mw-ferretti/angular-resource-tastypie/tree/master/examples)
 
-##Install
+## Install
 bower install angular-resource-tastypie - [See how to use.](https://github.com/mw-ferretti/angular-resource-tastypie/tree/master/examples/frontend/usability_app)
 
-##Usage
+## Usage
 ```javascript
 angular.module('myApp', ['ngResourceTastypie'])
 
@@ -57,12 +57,12 @@ angular.module('myApp', ['ngResourceTastypie'])
 }]);
 ```
 
-- <h5>Add the module dependency:</h5>
+- Add the module dependency:
 ```javascript
 angular.module('myApp', ['ngResourceTastypie'])
 ```
 
-- <h5>Add your web services provider configuration:</h5>
+- Add your web services provider configuration:
 ```javascript
 .config(function($tastypieProvider){
     $tastypieProvider
@@ -74,14 +74,14 @@ angular.module('myApp', ['ngResourceTastypie'])
 })
 ```
 
-- <h5>Add dependency in the scope:</h5>
+- Add dependency in the scope:
 ```javascript
 .controller('MyCtrl', ['$scope', '$tastypieResource', function($scope, $tastypieResource){
     ...
 }]);
 ```
 
-<h5>IMPORTANT:</h5>
+IMPORTANT:
 ```javascript
 $tastypieProvider
 .add('provider1', {
@@ -119,7 +119,7 @@ http://django-tastypie.readthedocs.org/en/latest/authentication.html
 }]);
 ```
 
-<h5>MULTI "PROVIDER" SAMPLE:</h5>
+MULTI "PROVIDER" SAMPLE:
 ```javascript
 angular.module('myApp', ['ngResourceTastypie'])
 
@@ -151,10 +151,10 @@ angular.module('myApp', ['ngResourceTastypie'])
 ```
 
 
-##Making queries
+## Making queries
 The $tastypieResource class is held responsible for connecting on the specific "list endpoint".
 
-<h5>Consider the following example:</h5>
+Consider the following example:
 We have a service called "song", which is responsible for providing the "TOP 100 SONGS CLASSIC ROCK":
 ```
 http://127.0.0.1:8001/api/v1/song/
@@ -168,7 +168,7 @@ $scope.Song = new $tastypieResource('song',{limit:5});
 
 ```
 
-- <h5>Creating objects</h5>
+- Creating objects
 The "$create()" method will return a "$tastypieObjects" object.<br>
 The $tastypieObjects class is held responsible for providing the "(C)reate, (R)ead, (U)pdate, (D)elete" methods.
 
@@ -212,7 +212,7 @@ After saving, your obj will be updated. For example, your obj now has an "id".. 
 </blockquote>
 
 
-- <h5>Updating objects</h5>
+- Updating objects
 
 ```javascript
 $scope.Song.objects.$update({
@@ -261,7 +261,7 @@ song.$save();
 ```
 
 
-- <h5>Deleting objects</h5>
+- Deleting objects
 
 ```javascript
 $scope.Song.objects.$delete({id:100});
@@ -292,7 +292,7 @@ song.$save();
 song.$delete()
 ```
 
-- <h5>Retrieving objects</h5>
+- Retrieving objects
 The "$find()" method will return a "$tastypiePaginator" object.<br>
 The $tastypiePaginator class is responsible for providing the "pagination control" methods, and the objects list.
 
@@ -318,7 +318,7 @@ $scope.Song.objects.$find({rank__lte:10}).then(
 );
 ```
 <blockquote>
-<h5>NOTE</h5>
+NOTE
 <p>
 1. After running the "$find" method for the first time, you have inside your instance "$tastypieResource" ($scope.Song), a "$tastypiePaginator" object ($scope.Song.page).
 </p>
@@ -393,12 +393,12 @@ Informe the request status for user. EX:
 ```
 [See how to use.](https://github.com/mw-ferretti/angular-resource-tastypie/tree/master/examples)
 
-##Class Diagram
+## Class Diagram
 ![Class Diagram](/dev/ClassDiagram.png)
 
-##Contribute
+## Contribute
 <h5>If you found it useful, please consider paying me a coffee ;)</h5>
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RGQ8NSYPA59FL)
 
-##License
+## License
 angular-resource-tastypie is released under the [MIT License](https://github.com/mw-ferretti/angular-resource-tastypie/blob/master/LICENSE).
