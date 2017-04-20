@@ -27,7 +27,7 @@ BENEFITS:
 - Backend:  [Django-Tastypie](https://django-tastypie.readthedocs.org/en/latest/) or equivalent schema.
 
 Note
-Requirements for the backend:
+> Requirements for the backend:
 - [django-cors-headers](https://github.com/ottoyiu/django-cors-headers)
 - [always_return_data](http://django-tastypie.readthedocs.org/en/latest/resources.html#always-return-data)
 
