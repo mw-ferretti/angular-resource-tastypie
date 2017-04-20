@@ -397,7 +397,7 @@ Informe the request status for user. EX:
 ![Class Diagram](/dev/ClassDiagram.png)
 
 ## Contribute
-<h5>If you found it useful, please consider paying me a coffee ;)</h5>
+If you found it useful, please consider paying me a coffee ;
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RGQ8NSYPA59FL)
 
 ## License
