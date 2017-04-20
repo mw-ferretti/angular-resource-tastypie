@@ -26,7 +26,7 @@ BENEFITS:
 - Frontend: [AngularJs 1.3+](https://angularjs.org/) 
 - Backend:  [Django-Tastypie](https://django-tastypie.readthedocs.org/en/latest/) or equivalent schema.
 
-<h5>Note</h5>
+Note
 Requirements for the backend:
 - [django-cors-headers](https://github.com/ottoyiu/django-cors-headers)
 - [always_return_data](http://django-tastypie.readthedocs.org/en/latest/resources.html#always-return-data)
