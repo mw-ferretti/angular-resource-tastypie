@@ -34,7 +34,7 @@ Note
 [See how to use.](https://github.com/mw-ferretti/angular-resource-tastypie/tree/master/examples)
 
 ## Install
-bower install angular-resource-tastypie - [See how to use.](https://github.com/mw-ferretti/angular-resource-tastypie/tree/master/examples/frontend/usability_app)
+> bower install angular-resource-tastypie - [See how to use.](https://github.com/mw-ferretti/angular-resource-tastypie/tree/master/examples/frontend/usability_app)
 
 ## Usage
 ```javascript
