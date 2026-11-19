@@ -1,6 +1,11 @@
 # Angular Resource Tastypie
 [RESTful](http://www.ibm.com/developerworks/library/ws-restful/) AngularJs client for [Django-Tastypie](https://django-tastypie.readthedocs.org/en/latest/) or equivalent schema.
 
+> **Legacy project**
+>
+> Originally developed in 2014 as an AngularJS REST client for Django Tastypie and compatible APIs.
+> This repository is preserved as part of my earlier open-source work and is no longer actively maintained.
+
 > [For angular2+ use the version in TypeScript (ts-resource-tastypie)](https://github.com/mw-ferretti/ts-resource-tastypie)
 
 Features:
